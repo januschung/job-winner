@@ -1,0 +1,36 @@
+type Query {
+    jobApplicationById(id: ID): JobApplication
+    jobApplicationByCompanyName(companyName: String): [JobApplication]
+    allJobApplication: [JobApplication]
+}
+
+type JobApplication {
+    id: ID!
+    companyName: String
+    jobTitle: String
+    salaryRange: String
+    jobUrl: String
+    appliedDate: String
+    description: String
+    status: String
+}
+
+type Mutation {
+    addJobApplication(addJobApplicationInput: AddJobApplicationInput): JobApplication
+    updateStatus(updateStatusInput: UpdateStatusInput): JobApplication
+}
+
+input AddJobApplicationInput {
+    companyName: String
+    jobTitle: String
+    salaryRange: String
+    jobUrl: String
+    appliedDate: String
+    description: String
+    status: String
+}
+
+input UpdateStatusInput {
+    id: ID!
+    status: String
+}
