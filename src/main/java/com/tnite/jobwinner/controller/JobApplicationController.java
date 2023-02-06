@@ -1,7 +1,5 @@
 package com.tnite.jobwinner.controller;
 
-import java.time.LocalDate;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -17,6 +15,8 @@ import com.tnite.jobwinner.model.UpdateStatusInput;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 
 import graphql.com.google.common.base.Function;
+import graphql.com.google.common.base.Objects;
+import io.micrometer.common.lang.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -48,8 +48,8 @@ public class JobApplicationController {
         jobApplication.setJobTitle(aji.getJobTitle());
         jobApplication.setSalaryRange(aji.getSalaryRange());
         jobApplication.setJobUrl(aji.getJobUrl());
-//        jobApplication.setAppliedDate(LocalDate.now());
         jobApplication.setAppliedDate(aji.getAppliedDate());
+        jobApplication.setDescription(aji.getDescription());
         jobApplication.setStatus(aji.getStatus());
         return jobApplication;
     };
@@ -69,6 +69,20 @@ public class JobApplicationController {
                     jobApplication.setStatus(updateStatusInput.getStatus());
                     return this.jobApplicationRepository.save(jobApplication);
                 });
+    }
+    
+    @MutationMapping
+    public Mono<JobApplication> deleteJobApplication(@Argument @NonNull Integer id) {
+        final Mono<JobApplication> jobApplication = this.jobApplicationRepository.findById(id);
+        if (java.util.Objects.isNull(jobApplication)) {
+            return Mono.empty();
+        }
+        log.info("Deleting job application idd {}", id);
+        return this.jobApplicationRepository.findById(id).switchIfEmpty(Mono.empty()).filter(java.util.Objects::nonNull)
+                .flatMap(jobApplicationToBeDeleted -> this.jobApplicationRepository
+                        .delete(jobApplicationToBeDeleted)
+                        .then(Mono.just(jobApplicationToBeDeleted)));
+
     }
     
     @QueryMapping

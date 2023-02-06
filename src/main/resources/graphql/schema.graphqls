@@ -18,6 +18,7 @@ type JobApplication {
 type Mutation {
     addJobApplication(addJobApplicationInput: AddJobApplicationInput): JobApplication
     updateStatus(updateStatusInput: UpdateStatusInput): JobApplication
+    deleteJobApplication(id: ID): JobApplication
 }
 
 input AddJobApplicationInput {
