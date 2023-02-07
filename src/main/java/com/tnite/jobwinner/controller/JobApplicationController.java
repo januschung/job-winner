@@ -1,11 +1,13 @@
 package com.tnite.jobwinner.controller;
 
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
@@ -15,13 +17,11 @@ import com.tnite.jobwinner.model.UpdateStatusInput;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 
 import graphql.com.google.common.base.Function;
-import graphql.com.google.common.base.Objects;
 import io.micrometer.common.lang.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @Controller
 @Slf4j
 public class JobApplicationController {
@@ -29,9 +29,12 @@ public class JobApplicationController {
     @Bean
     private WebFluxConfigurer corsConfigurer() {
         return new WebFluxConfigurer() {
+            @Value("${ui.path}")
+            private String UI_PATH;
+            
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/graphql").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/graphql").allowedOrigins(UI_PATH);
             }
         };
     }
@@ -74,7 +77,7 @@ public class JobApplicationController {
     @MutationMapping
     public Mono<JobApplication> deleteJobApplication(@Argument @NonNull Integer id) {
         final Mono<JobApplication> jobApplication = this.jobApplicationRepository.findById(id);
-        if (java.util.Objects.isNull(jobApplication)) {
+        if (Objects.isNull(jobApplication)) {
             return Mono.empty();
         }
         log.info("Deleting job application idd {}", id);
