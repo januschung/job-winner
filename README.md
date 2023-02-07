@@ -72,7 +72,6 @@ Please follow the build instruction from the [UI repo](https://github.com/janusc
 ## This is a beta version
 
 While it works if one just want to keep track of the job applications, it needs further development for some basic features:
-1. Delete a job application
 1. Update a job application
 1. Add interview
 1. Add job offer
