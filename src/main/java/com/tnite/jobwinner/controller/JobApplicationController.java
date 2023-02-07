@@ -1,12 +1,13 @@
 package com.tnite.jobwinner.controller;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
@@ -76,7 +77,7 @@ public class JobApplicationController {
     @MutationMapping
     public Mono<JobApplication> deleteJobApplication(@Argument @NonNull Integer id) {
         final Mono<JobApplication> jobApplication = this.jobApplicationRepository.findById(id);
-        if (java.util.Objects.isNull(jobApplication)) {
+        if (Objects.isNull(jobApplication)) {
             return Mono.empty();
         }
         log.info("Deleting job application idd {}", id);
