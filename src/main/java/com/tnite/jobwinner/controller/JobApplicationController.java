@@ -57,11 +57,40 @@ public class JobApplicationController {
         return jobApplication;
     };
     
+    Function<JobApplication, JobApplication> editMapping = ji -> {
+        var jobApplication = new JobApplication();
+        jobApplication.setId(ji.getId());
+        jobApplication.setCompanyName(ji.getCompanyName());
+        jobApplication.setJobTitle(ji.getJobTitle());
+        jobApplication.setSalaryRange(ji.getSalaryRange());
+        jobApplication.setJobUrl(ji.getJobUrl());
+        jobApplication.setAppliedDate(ji.getAppliedDate());
+        jobApplication.setDescription(ji.getDescription());
+        jobApplication.setStatus(ji.getStatus());
+        return jobApplication;
+    };
+    
     @MutationMapping
     public Mono<JobApplication> addJobApplication(@Argument AddJobApplicationInput addJobApplicationInput) {
         Mono<JobApplication> jobApplication = this.jobApplicationRepository.save(mapping.apply(addJobApplicationInput));
         log.info("Added new job application: {}", addJobApplicationInput);
         return jobApplication;
+    }
+    
+    @MutationMapping
+    public Mono<JobApplication> updateJobApplication(@Argument JobApplication jobApplication) {
+        log.info("Updating job application id {}, {}", jobApplication.getId(), jobApplication.getDescription());
+        return this.jobApplicationRepository.findById(jobApplication.getId())
+                .flatMap(j -> {
+                    j.setCompanyName(jobApplication.getCompanyName());
+                    j.setJobTitle(jobApplication.getJobTitle());
+                    j.setSalaryRange(jobApplication.getSalaryRange());
+                    j.setJobUrl(jobApplication.getJobUrl());
+                    j.setAppliedDate(jobApplication.getAppliedDate());
+                    j.setDescription(jobApplication.getDescription());
+                    j.setStatus(jobApplication.getStatus());
+                    return this.jobApplicationRepository.save(jobApplication);
+                });
     }
     
     @MutationMapping

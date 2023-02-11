@@ -18,10 +18,22 @@ type JobApplication {
 type Mutation {
     addJobApplication(addJobApplicationInput: AddJobApplicationInput): JobApplication
     updateStatus(updateStatusInput: UpdateStatusInput): JobApplication
+    updateJobApplication(jobApplication: UpdateJobApplicationInput): JobApplication
     deleteJobApplication(id: ID): JobApplication
 }
 
 input AddJobApplicationInput {
+    companyName: String
+    jobTitle: String
+    salaryRange: String
+    jobUrl: String
+    appliedDate: String
+    description: String
+    status: String
+}
+
+input UpdateJobApplicationInput {
+    id: ID!
     companyName: String
     jobTitle: String
     salaryRange: String
