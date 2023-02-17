@@ -41,17 +41,17 @@
             <artifactId>r2dbc-postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-<!-- swap this part with postgresql if you prefer to ues h2 for development/testing  
+<!-- swap this part with postgresql if you prefer to ues h2 for development/testing -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.r2dbc</groupId>
             <artifactId>r2dbc-h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>-->
+            <scope>test</scope>
+        </dependency> 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
