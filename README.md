@@ -78,7 +78,6 @@ While it works if one just want to keep track of the job applications, it needs 
 1. Add job offer
 1. A list of interview page
 1. A list of offer page
-1. Unit test
 
 
 ## Contributing 

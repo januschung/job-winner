@@ -1,7 +1,6 @@
 package com.tnite.jobwinner.controller;
 
-import java.util.Objects;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -14,16 +13,13 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 import com.tnite.jobwinner.model.AddJobApplicationInput;
 import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.model.UpdateStatusInput;
-import com.tnite.jobwinner.repo.JobApplicationRepository;
+import com.tnite.jobwinner.service.JobApplicationService;
 
-import graphql.com.google.common.base.Function;
 import io.micrometer.common.lang.NonNull;
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Controller
-@Slf4j
 public class JobApplicationController {
 
     @Bean
@@ -39,92 +35,37 @@ public class JobApplicationController {
         };
     }
     
-    private final JobApplicationRepository jobApplicationRepository;
+    @Autowired
+    private JobApplicationService jobApplicationService;
     
-    public JobApplicationController(JobApplicationRepository jobApplicationRepository) {
-        this.jobApplicationRepository = jobApplicationRepository;
-    }
-    
-    Function<AddJobApplicationInput, JobApplication> mapping = aji -> {
-        var jobApplication = new JobApplication();
-        jobApplication.setCompanyName(aji.getCompanyName());
-        jobApplication.setJobTitle(aji.getJobTitle());
-        jobApplication.setSalaryRange(aji.getSalaryRange());
-        jobApplication.setJobUrl(aji.getJobUrl());
-        jobApplication.setAppliedDate(aji.getAppliedDate());
-        jobApplication.setDescription(aji.getDescription());
-        jobApplication.setStatus(aji.getStatus());
-        return jobApplication;
-    };
-    
-    Function<JobApplication, JobApplication> editMapping = ji -> {
-        var jobApplication = new JobApplication();
-        jobApplication.setId(ji.getId());
-        jobApplication.setCompanyName(ji.getCompanyName());
-        jobApplication.setJobTitle(ji.getJobTitle());
-        jobApplication.setSalaryRange(ji.getSalaryRange());
-        jobApplication.setJobUrl(ji.getJobUrl());
-        jobApplication.setAppliedDate(ji.getAppliedDate());
-        jobApplication.setDescription(ji.getDescription());
-        jobApplication.setStatus(ji.getStatus());
-        return jobApplication;
-    };
     
     @MutationMapping
     public Mono<JobApplication> addJobApplication(@Argument AddJobApplicationInput addJobApplicationInput) {
-        Mono<JobApplication> jobApplication = this.jobApplicationRepository.save(mapping.apply(addJobApplicationInput));
-        log.info("Added new job application: {}", addJobApplicationInput);
+        Mono<JobApplication> jobApplication = jobApplicationService.addJobApplication(addJobApplicationInput);
         return jobApplication;
     }
     
     @MutationMapping
     public Mono<JobApplication> updateJobApplication(@Argument JobApplication jobApplication) {
-        log.info("Updating job application id {}, {}", jobApplication.getId(), jobApplication.getDescription());
-        return this.jobApplicationRepository.findById(jobApplication.getId())
-                .flatMap(j -> {
-                    j.setCompanyName(jobApplication.getCompanyName());
-                    j.setJobTitle(jobApplication.getJobTitle());
-                    j.setSalaryRange(jobApplication.getSalaryRange());
-                    j.setJobUrl(jobApplication.getJobUrl());
-                    j.setAppliedDate(jobApplication.getAppliedDate());
-                    j.setDescription(jobApplication.getDescription());
-                    j.setStatus(jobApplication.getStatus());
-                    return this.jobApplicationRepository.save(jobApplication);
-                });
+        return jobApplicationService.updateJobApplication(jobApplication);
     }
     
     @MutationMapping
     public Mono<JobApplication> updateStatus(@Argument UpdateStatusInput updateStatusInput) {
-        log.info("Updating job application id {} with status {}", updateStatusInput.getId(), updateStatusInput.getStatus());
-        return this.jobApplicationRepository.findById(updateStatusInput.getId())
-                .flatMap(jobApplication -> {
-                    jobApplication.setStatus(updateStatusInput.getStatus());
-                    return this.jobApplicationRepository.save(jobApplication);
-                });
+        return jobApplicationService.updateStatus(updateStatusInput);
     }
     
     @MutationMapping
     public Mono<JobApplication> deleteJobApplication(@Argument @NonNull Integer id) {
-        final Mono<JobApplication> jobApplication = this.jobApplicationRepository.findById(id);
-        if (Objects.isNull(jobApplication)) {
-            return Mono.empty();
-        }
-        log.info("Deleting job application idd {}", id);
-        return this.jobApplicationRepository.findById(id).switchIfEmpty(Mono.empty()).filter(java.util.Objects::nonNull)
-                .flatMap(jobApplicationToBeDeleted -> this.jobApplicationRepository
-                        .delete(jobApplicationToBeDeleted)
-                        .then(Mono.just(jobApplicationToBeDeleted)));
+        final Mono<JobApplication> jobApplication = jobApplicationService.deleteJobApplication(id);
+        return jobApplication;
 
     }
-    
-    @QueryMapping
-    public Flux<JobApplication> jobApplicationByCompanyName(@Argument String companyName) {
-        return this.jobApplicationByCompanyName(companyName);
-    }
-    
+        
     @QueryMapping
     public Flux<JobApplication> allJobApplication() {
-        return this.jobApplicationRepository.findAll();
+        Flux<JobApplication> jobApplications = jobApplicationService.allJobApplication(); 
+        return jobApplications;
     }
     
 

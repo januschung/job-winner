@@ -1,5 +1,0 @@
-query {
-  allJobApplication {
-        id, description, jobTitle, linkedInJobUrl, appliedDate
-  }
-}
