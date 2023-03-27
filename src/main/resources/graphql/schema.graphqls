@@ -2,6 +2,8 @@ type Query {
     jobApplicationById(id: ID): JobApplication
     jobApplicationByCompanyName(companyName: String): [JobApplication]
     allJobApplication: [JobApplication]
+    profileById(id: ID): Profile
+    allProfile: [Profile]
 }
 
 type JobApplication {
@@ -15,11 +17,26 @@ type JobApplication {
     status: String
 }
 
+type Profile {
+    id: ID!
+    firstName: String
+    lastName: String
+    addressStreet1: String
+    addressStreet2: String
+    addressCity: String
+    addressState: String
+    addressZip: String
+    linkedin: String
+    github: String
+    personalWebsite: String
+}
+
 type Mutation {
     addJobApplication(addJobApplicationInput: AddJobApplicationInput): JobApplication
-    updateStatus(updateStatusInput: UpdateStatusInput): JobApplication
-    updateJobApplication(jobApplication: UpdateJobApplicationInput): JobApplication
+    updateJobApplication(jobApplication: UpdateJobApplicationInput): JobApplication  
     deleteJobApplication(id: ID): JobApplication
+    addProfile(addProfileInput: AddProfileInput): Profile
+    updateProfile(profile: UpdateProfileInput): Profile
 }
 
 input AddJobApplicationInput {
@@ -43,7 +60,29 @@ input UpdateJobApplicationInput {
     status: String
 }
 
-input UpdateStatusInput {
+input AddProfileInput {
+    firstName: String
+    lastName: String
+    addressStreet1: String
+    addressStreet2: String
+    addressCity: String
+    addressState: String
+    addressZip: String
+    linkedin: String
+    github: String
+    personalWebsite: String
+}
+
+input UpdateProfileInput {
     id: ID!
-    status: String
+    firstName: String
+    lastName: String
+    addressStreet1: String
+    addressStreet2: String
+    addressCity: String
+    addressState: String
+    addressZip: String
+    linkedin: String
+    github: String
+    personalWebsite: String
 }
