@@ -12,7 +12,6 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import com.tnite.jobwinner.model.AddJobApplicationInput;
 import com.tnite.jobwinner.model.JobApplication;
-import com.tnite.jobwinner.model.UpdateStatusInput;
 import com.tnite.jobwinner.service.JobApplicationService;
 
 import io.micrometer.common.lang.NonNull;
@@ -50,11 +49,7 @@ public class JobApplicationController {
         return jobApplicationService.updateJobApplication(jobApplication);
     }
     
-    @MutationMapping
-    public Mono<JobApplication> updateStatus(@Argument UpdateStatusInput updateStatusInput) {
-        return jobApplicationService.updateStatus(updateStatusInput);
-    }
-    
+
     @MutationMapping
     public Mono<JobApplication> deleteJobApplication(@Argument @NonNull Integer id) {
         final Mono<JobApplication> jobApplication = jobApplicationService.deleteJobApplication(id);

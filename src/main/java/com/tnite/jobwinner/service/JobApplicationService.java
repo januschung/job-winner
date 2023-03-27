@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.tnite.jobwinner.model.AddJobApplicationInput;
 import com.tnite.jobwinner.model.JobApplication;
-import com.tnite.jobwinner.model.UpdateStatusInput;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 
 import graphql.com.google.common.base.Function;
@@ -57,7 +56,7 @@ public class JobApplicationService {
     
 
     public Mono<JobApplication> updateJobApplication(JobApplication jobApplication) {
-        log.info("Updating job application id {}, {}", jobApplication.getId(), jobApplication.getDescription());
+        log.info("Updating job application id {}", jobApplication.getId());
         return this.jobApplicationRepository.findById(jobApplication.getId())
                 .flatMap(j -> {
                     j.setCompanyName(jobApplication.getCompanyName());
@@ -67,16 +66,6 @@ public class JobApplicationService {
                     j.setAppliedDate(jobApplication.getAppliedDate());
                     j.setDescription(jobApplication.getDescription());
                     j.setStatus(jobApplication.getStatus());
-                    return jobApplicationRepository.save(jobApplication).log();
-                });
-    }
-    
-
-    public Mono<JobApplication> updateStatus(UpdateStatusInput updateStatusInput) {
-        log.info("Updating job application id {} with status {}", updateStatusInput.getId(), updateStatusInput.getStatus());
-        return jobApplicationRepository.findById(updateStatusInput.getId())
-                .flatMap(jobApplication -> {
-                    jobApplication.setStatus(updateStatusInput.getStatus());
                     return jobApplicationRepository.save(jobApplication).log();
                 });
     }
