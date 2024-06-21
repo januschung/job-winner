@@ -35,7 +35,7 @@ public class ProfileController {
     }
 
     @QueryMapping
-    public Mono<Profile> getProfile(@Argument Integer id) {
+    public Mono<Profile> profileById(@Argument Integer id) {
         return profileService.getProfile(id);
     }
 

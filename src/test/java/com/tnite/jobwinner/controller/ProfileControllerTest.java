@@ -73,7 +73,7 @@ class ProfileControllerTest {
 		Profile profile1 = new Profile();
 		when(profileService.getProfile(anyInt())).thenReturn(Mono.just(profile1));
 
-		Mono<Profile> result = profileController.getProfile(1);
+		Mono<Profile> result = profileController.profileById(1);
 
 		assertEquals(profile1, result.block());
 	}
