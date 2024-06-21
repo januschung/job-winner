@@ -7,7 +7,6 @@ import com.tnite.jobwinner.model.AddProfileInput;
 import com.tnite.jobwinner.model.Profile;
 import com.tnite.jobwinner.repo.ProfileRepository;
 
-import graphql.com.google.common.base.Function;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,71 +14,69 @@ import reactor.core.publisher.Mono;
 @Service
 @Slf4j
 public class ProfileService {
-    
+
     @Autowired
     private ProfileRepository profileRepository;
-    
-    Function<AddProfileInput, Profile> mapping = p -> {
+
+    private Profile mapToProfile(AddProfileInput addProfileInput) {
         var profile = new Profile();
-        profile.setFirstName(p.getFirstName());
-        profile.setLastName(p.getLastName());
-        profile.setAddressStreet1(p.getAddressStreet1());
-        profile.setAddressStreet2(p.getAddressStreet2());
-        profile.setAddressCity(p.getAddressCity());
-        profile.setAddressState(p.getAddressState());
-        profile.setAddressZip(p.getAddressZip());
-        profile.setLinkedin(p.getLinkedin());
-        profile.setGithub(p.getGithub());
-        profile.setPersonalWebsite(p.getPersonalWebsite());
-        return profile;
-    };
-    
-    Function<Profile, Profile> editMapping = p -> {
-        var profile = new Profile();
-        profile.setId(p.getId());
-        profile.setFirstName(p.getFirstName());
-        profile.setLastName(p.getLastName());
-        profile.setAddressStreet1(p.getAddressStreet1());
-        profile.setAddressStreet2(p.getAddressStreet2());
-        profile.setAddressCity(p.getAddressCity());
-        profile.setAddressState(p.getAddressState());
-        profile.setAddressZip(p.getAddressZip());
-        profile.setLinkedin(p.getLinkedin());
-        profile.setGithub(p.getGithub());
-        profile.setPersonalWebsite(p.getPersonalWebsite());
-        return profile;
-    };
-    
-    
-    public Mono<Profile> addProfile(AddProfileInput addProfileInput) {
-        Mono<Profile> profile = profileRepository.save(mapping.apply(addProfileInput));
-        log.info("Added new profile: {}", addProfileInput);
+        profile.setFirstName(addProfileInput.getFirstName());
+        profile.setLastName(addProfileInput.getLastName());
+        profile.setAddressStreet1(addProfileInput.getAddressStreet1());
+        profile.setAddressStreet2(addProfileInput.getAddressStreet2());
+        profile.setAddressCity(addProfileInput.getAddressCity());
+        profile.setAddressState(addProfileInput.getAddressState());
+        profile.setAddressZip(addProfileInput.getAddressZip());
+        profile.setLinkedin(addProfileInput.getLinkedin());
+        profile.setGithub(addProfileInput.getGithub());
+        profile.setPersonalWebsite(addProfileInput.getPersonalWebsite());
         return profile;
     }
-    
+
+    public Mono<Profile> addProfile(AddProfileInput addProfileInput) {
+        Profile profile = mapToProfile(addProfileInput);
+        return profileRepository.save(profile)
+            .doOnSuccess(p -> log.info("Added new profile: {}", p))
+            .doOnError(e -> log.error("Failed to add profile: {}", addProfileInput, e));
+    }
 
     public Mono<Profile> updateProfile(Profile profile) {
-        log.info("Updating profile id {}, {}", profile.getId());
-        return this.profileRepository.findById(profile.getId())
-                .flatMap(p -> {
-                    p.setFirstName(profile.getFirstName());
-                    p.setLastName(profile.getLastName());
-                    p.setAddressStreet1(profile.getAddressStreet1());
-                    p.setAddressStreet2(profile.getAddressStreet2());
-                    p.setAddressCity(profile.getAddressCity());
-                    p.setAddressState(profile.getAddressState());
-                    p.setAddressZip(profile.getAddressZip());
-                    p.setLinkedin(profile.getLinkedin());
-                    p.setGithub(profile.getGithub());
-                    p.setPersonalWebsite(profile.getPersonalWebsite());
-                    return profileRepository.save(profile).log();
-                });
+        return profileRepository.findById(profile.getId())
+            .flatMap(existingProfile -> {
+                updateProfileDetails(existingProfile, profile);
+                return profileRepository.save(existingProfile);
+            })
+            .doOnSuccess(p -> log.info("Updated profile: {}", p))
+            .doOnError(e -> log.error("Failed to update profile: {}", profile, e));
     }
-    
+
+    private void updateProfileDetails(Profile existingProfile, Profile updatedProfile) {
+        existingProfile.setFirstName(updatedProfile.getFirstName());
+        existingProfile.setLastName(updatedProfile.getLastName());
+        existingProfile.setAddressStreet1(updatedProfile.getAddressStreet1());
+        existingProfile.setAddressStreet2(updatedProfile.getAddressStreet2());
+        existingProfile.setAddressCity(updatedProfile.getAddressCity());
+        existingProfile.setAddressState(updatedProfile.getAddressState());
+        existingProfile.setAddressZip(updatedProfile.getAddressZip());
+        existingProfile.setLinkedin(updatedProfile.getLinkedin());
+        existingProfile.setGithub(updatedProfile.getGithub());
+        existingProfile.setPersonalWebsite(updatedProfile.getPersonalWebsite());
+    }
 
     public Flux<Profile> allProfile() {
-        return this.profileRepository.findAll().log();
+        return profileRepository.findAll()
+            .doOnComplete(() -> log.info("Retrieved all profiles"))
+            .doOnError(e -> log.error("Failed to retrieve profiles", e));
     }
 
+    public Mono<Profile> getProfile(Integer id) {
+        return profileRepository.findById(id)
+            .switchIfEmpty(Mono.defer(() -> {
+                log.warn("Profile with id {} not found", id);
+                return Mono.empty();
+            }))
+            .doOnSuccess(profile -> log.info("Retrieved profile: {}", profile))
+            .doOnError(e -> log.error("Failed to retrieve profile with id {}", id, e));
+    }
 
 }
