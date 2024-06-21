@@ -21,8 +21,7 @@ public class ProfileController {
     
     @MutationMapping
     public Mono<Profile> addProfile(@Argument AddProfileInput addProfileInput) {
-        Mono<Profile> profile = profileService.addProfile(addProfileInput);
-        return profile;
+        return profileService.addProfile(addProfileInput);
     }
     
     @MutationMapping
@@ -32,8 +31,12 @@ public class ProfileController {
     
     @QueryMapping
     public Flux<Profile> allProfile() {
-        Flux<Profile> profile = profileService.allProfile(); 
-        return profile;
+        return profileService.allProfile();
+    }
+
+    @QueryMapping
+    public Mono<Profile> getProfile(@Argument Integer id) {
+        return profileService.getProfile(id);
     }
 
 }

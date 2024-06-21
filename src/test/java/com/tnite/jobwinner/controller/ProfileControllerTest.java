@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,5 +66,15 @@ class ProfileControllerTest {
 		Flux<Profile> result = profileController.allProfile();
 
 		assertEquals(0, result.collectList().block().size());
+	}
+
+	@Test
+	void getProfile() {
+		Profile profile1 = new Profile();
+		when(profileService.getProfile(anyInt())).thenReturn(Mono.just(profile1));
+
+		Mono<Profile> result = profileController.getProfile(1);
+
+		assertEquals(profile1, result.block());
 	}
 }
