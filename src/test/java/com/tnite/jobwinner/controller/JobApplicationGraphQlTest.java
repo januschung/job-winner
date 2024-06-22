@@ -14,6 +14,9 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+
 
 @SpringBootTest
 @AutoConfigureGraphQlTester
@@ -99,6 +102,45 @@ public class JobApplicationGraphQlTest {
             .entity(String.class)
             .isEqualTo("SWE");
         
+    }
+
+    @Test
+    void testSearchJobApplications() {
+        graphQlTester.document(getSearchQueryFromSearchTerm("whatever"))
+            .execute()
+            .path("searchJobApplications")
+            .entityList(JobApplication.class)
+            .hasSize(3);
+    }
+
+    @Test
+    void testSearchJobApplicationsWhenOnlyOneMatches() {
+        graphQlTester.document(getSearchQueryFromSearchTerm("qA"))
+            .execute()
+            .path("searchJobApplications")
+            .entityList(JobApplication.class)
+            .hasSize(1);
+    }
+
+    @Test
+    void testSearchJobApplicationsWhenNoMatch() {
+        graphQlTester.document(getSearchQueryFromSearchTerm("bogus"))
+            .execute()
+            .path("searchJobApplications")
+            .entityList(JobApplication.class)
+            .hasSize(0);
+    }
+
+    private String getSearchQueryFromSearchTerm(String searchTerm) {
+        return String.format("""
+        query {
+            searchJobApplications(searchTerm: "%s") {
+                id
+                companyName
+                jobTitle
+            }
+        }
+        """, searchTerm);
     }
 
 

@@ -62,6 +62,10 @@ public class JobApplicationController {
         Flux<JobApplication> jobApplications = jobApplicationService.allJobApplication(); 
         return jobApplications;
     }
-    
+
+    @QueryMapping
+    public Flux<JobApplication> searchJobApplications(@Argument String searchTerm) {
+        return jobApplicationService.searchJobApplications(searchTerm);
+    }
 
 }

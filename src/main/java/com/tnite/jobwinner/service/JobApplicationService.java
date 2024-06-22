@@ -90,4 +90,7 @@ public class JobApplicationService {
     }
 
 
+    public Flux<JobApplication> searchJobApplications(String searchTerm) {
+        return jobApplicationRepository.searchJobApplications(searchTerm);
+    }
 }

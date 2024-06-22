@@ -4,6 +4,7 @@ type Query {
     allJobApplication: [JobApplication]
     profileById(id: ID): Profile
     allProfile: [Profile]
+    searchJobApplications(searchTerm: String!): [JobApplication]
 }
 
 type JobApplication {
