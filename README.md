@@ -76,11 +76,17 @@ This is the backend for Job Winner and here is the stack:
 
 ## To build 
 
+Prereq: Java17
+
 1. Bring up the Postgres DB with docker-compose
 ```console
 docker-compose up -d
 ```
 1. Create the db schema with `src/main/resources/schema.sql`
+    1. Visit http://localhost:8081/. Information can be found or modified [here](./src/main/resources/application.properties).
+        1. User: `postgres`.
+        1. Password: `example`.
+        1. Click on `Import` and follow instructions to import file.
 1. Build the java app with Maven
 ```console
 mvn clean install
@@ -94,4 +100,3 @@ Please follow the build instruction from the [UI repo](https://github.com/janusc
 I would like your help and input.
 
 I appreciate all suggestions or PRs which will help this project better. Feel free to fork the project and create a pull request with your idea.
-
