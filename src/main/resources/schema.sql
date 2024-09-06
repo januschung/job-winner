@@ -1,4 +1,4 @@
-create table job_application(
+create table if not exists job_application(
     id serial primary key,
     company_name varchar(50),
     job_title varchar(50),
@@ -9,7 +9,7 @@ create table job_application(
     status varchar(20)
 );
 
-create table profile(
+create table if not exists profile(
     id serial primary key,
     first_name varchar(200),
     last_name varchar(200),

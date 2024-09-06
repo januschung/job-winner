@@ -1,17 +1,22 @@
-version: '3.1'
-
 services:
-
   db:
-    image: postgres
+    build:
+      dockerfile: postgresDB.dockerfile
     restart: always
     environment:
       POSTGRES_PASSWORD: example
+      POSTGRES_USERNAME: postgres
     ports:
       - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8081:8080
+
+volumes:
+  pgdata:
+    external: false
