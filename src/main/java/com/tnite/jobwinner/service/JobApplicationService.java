@@ -76,7 +76,7 @@ public class JobApplicationService {
         if (Objects.isNull(jobApplication)) {
             return Mono.empty();
         }
-        log.info("Deleting job application idd {}", id);
+        log.info("Deleting job application id {}", id);
         return this.jobApplicationRepository.findById(id).switchIfEmpty(Mono.empty()).filter(Objects::nonNull)
                 .flatMap(jobApplicationToBeDeleted -> jobApplicationRepository
                         .delete(jobApplicationToBeDeleted)

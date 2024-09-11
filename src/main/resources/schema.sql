@@ -23,5 +23,25 @@ create table if not exists profile(
     personal_website varchar(200)
 );
 
+create table if not exists interview (
+    id serial primary key,
+    job_application_id int not null,
+    interview_date date not null,
+    interviewer varchar(255),
+    description varchar(500),
+    status varchar(20),
+    foreign key (job_application_id) references job_application(id) on delete cascade
+);
+
+create table if not exists offer (
+    id serial primary key,
+    job_application_id int not null,
+    offer_date date not null,
+    salary_offered varchar(255),
+    description varchar(500),
+    status varchar(20),
+    foreign key (job_application_id) references job_application(id) on delete cascade
+);
+
 insert into profile(id)
     values(1);
