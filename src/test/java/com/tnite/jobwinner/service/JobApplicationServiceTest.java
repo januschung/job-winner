@@ -6,7 +6,6 @@ import com.tnite.jobwinner.repo.JobApplicationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -60,7 +59,7 @@ public class JobApplicationServiceTest {
 
 	@Test
 	void testAddJobApplication() {
-		when(jobApplicationRepository.save(ArgumentMatchers.any(JobApplication.class))).thenReturn(Mono.just(jobApplication1));
+		when(jobApplicationRepository.save(any(JobApplication.class))).thenReturn(Mono.just(jobApplication1));
 
 		Mono<JobApplication> result = jobApplicationService.addJobApplication(addJobApplicationInput1);
 

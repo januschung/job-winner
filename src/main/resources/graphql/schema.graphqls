@@ -5,6 +5,10 @@ type Query {
     profileById(id: ID): Profile
     allProfile: [Profile]
     searchJobApplications(searchTerm: String!): [JobApplication]
+    allInterview: [Interview]
+    allInterviewByJobApplicationId(jobApplicationId: Int!): [Interview]
+    interviewById(id: ID): Interview
+    allOfferByApplicationId(jobApplicationId: Int!): [Offer]
 }
 
 type JobApplication {
@@ -32,12 +36,34 @@ type Profile {
     personalWebsite: String
 }
 
+type Offer {
+    id: ID!
+    jobApplicationId: Int!
+    offerDate: String!
+    salaryOffered: String
+    description: String
+    status: String
+}
+
+type Interview {
+    id: ID!
+    jobApplicationId: Int!
+    interviewDate: String!
+    interviewer: String
+    description: String
+    status: String
+}
+
 type Mutation {
     addJobApplication(addJobApplicationInput: AddJobApplicationInput): JobApplication
-    updateJobApplication(jobApplication: UpdateJobApplicationInput): JobApplication  
+    updateJobApplication(jobApplication: UpdateJobApplicationInput): JobApplication
     deleteJobApplication(id: ID): JobApplication
     addProfile(addProfileInput: AddProfileInput): Profile
     updateProfile(profile: UpdateProfileInput): Profile
+    addInterview(interviewInput: AddInterviewInput): Interview
+    updateInterview(id: ID!, interview: UpdateInterviewInput): Interview
+    addOffer(offerInput: AddOfferInput): Offer
+    updateOffer(id: ID!, offer: UpdateOfferInput): Offer
 }
 
 input AddJobApplicationInput {
@@ -86,4 +112,37 @@ input UpdateProfileInput {
     linkedin: String
     github: String
     personalWebsite: String
+}
+
+input AddInterviewInput {
+    jobApplicationId: Int!
+    interviewDate: String!
+    interviewer: String
+    description: String
+    status: String
+}
+
+input UpdateInterviewInput {
+    id: ID!
+    jobApplicationId: Int!
+    interviewDate: String!
+    interviewer: String
+    description: String
+    status: String
+}
+
+input AddOfferInput {
+    jobApplicationId: Int!
+    offerDate: String!
+    salaryOffered: String
+    description: String
+    status: String
+}
+
+input UpdateOfferInput {
+    jobApplicationId: Int!
+    offerDate: String!
+    salaryOffered: String
+    description: String
+    status: String
 }
