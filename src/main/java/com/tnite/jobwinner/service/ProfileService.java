@@ -1,14 +1,10 @@
 package com.tnite.jobwinner.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.tnite.jobwinner.model.AddProfileInput;
 import com.tnite.jobwinner.model.Profile;
 import com.tnite.jobwinner.repo.ProfileRepository;
-
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Flux;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -17,28 +13,6 @@ public class ProfileService {
 
     @Autowired
     private ProfileRepository profileRepository;
-
-    private Profile mapToProfile(AddProfileInput addProfileInput) {
-        var profile = new Profile();
-        profile.setFirstName(addProfileInput.getFirstName());
-        profile.setLastName(addProfileInput.getLastName());
-        profile.setAddressStreet1(addProfileInput.getAddressStreet1());
-        profile.setAddressStreet2(addProfileInput.getAddressStreet2());
-        profile.setAddressCity(addProfileInput.getAddressCity());
-        profile.setAddressState(addProfileInput.getAddressState());
-        profile.setAddressZip(addProfileInput.getAddressZip());
-        profile.setLinkedin(addProfileInput.getLinkedin());
-        profile.setGithub(addProfileInput.getGithub());
-        profile.setPersonalWebsite(addProfileInput.getPersonalWebsite());
-        return profile;
-    }
-
-    public Mono<Profile> addProfile(AddProfileInput addProfileInput) {
-        Profile profile = mapToProfile(addProfileInput);
-        return profileRepository.save(profile)
-            .doOnSuccess(p -> log.info("Added new profile: {}", p))
-            .doOnError(e -> log.error("Failed to add profile: {}", addProfileInput, e));
-    }
 
     public Mono<Profile> updateProfile(Profile profile) {
         return profileRepository.findById(profile.getId())
@@ -61,12 +35,6 @@ public class ProfileService {
         existingProfile.setLinkedin(updatedProfile.getLinkedin());
         existingProfile.setGithub(updatedProfile.getGithub());
         existingProfile.setPersonalWebsite(updatedProfile.getPersonalWebsite());
-    }
-
-    public Flux<Profile> allProfile() {
-        return profileRepository.findAll()
-            .doOnComplete(() -> log.info("Retrieved all profiles"))
-            .doOnError(e -> log.error("Failed to retrieve profiles", e));
     }
 
     public Mono<Profile> getProfile(Integer id) {

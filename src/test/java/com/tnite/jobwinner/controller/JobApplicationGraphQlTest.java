@@ -1,7 +1,6 @@
 package com.tnite.jobwinner.controller;
 
 
-import com.tnite.jobwinner.model.Interview;
 import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 import org.junit.jupiter.api.BeforeEach;
