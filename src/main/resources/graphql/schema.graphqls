@@ -3,7 +3,6 @@ type Query {
     jobApplicationByCompanyName(companyName: String): [JobApplication]
     allJobApplication: [JobApplication]
     profileById(id: ID): Profile
-    allProfile: [Profile]
     searchJobApplications(searchTerm: String!): [JobApplication]
     allInterview: [Interview]
     allInterviewByJobApplicationId(jobApplicationId: Int!): [Interview]
@@ -58,7 +57,6 @@ type Mutation {
     addJobApplication(addJobApplicationInput: AddJobApplicationInput): JobApplication
     updateJobApplication(jobApplication: UpdateJobApplicationInput): JobApplication
     deleteJobApplication(id: ID): JobApplication
-    addProfile(addProfileInput: AddProfileInput): Profile
     updateProfile(profile: UpdateProfileInput): Profile
     addInterview(interviewInput: AddInterviewInput): Interview
     updateInterview(id: ID!, interview: UpdateInterviewInput): Interview
@@ -85,19 +83,6 @@ input UpdateJobApplicationInput {
     appliedDate: String
     description: String
     status: String
-}
-
-input AddProfileInput {
-    firstName: String
-    lastName: String
-    addressStreet1: String
-    addressStreet2: String
-    addressCity: String
-    addressState: String
-    addressZip: String
-    linkedin: String
-    github: String
-    personalWebsite: String
 }
 
 input UpdateProfileInput {

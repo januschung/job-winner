@@ -26,8 +26,6 @@ Another feature of Job Winner is the `Profile Page`. With that one can store use
 Current function:
 1. An Index page to list all the job applications
 ![index](readme-img/index.png)
-1. A Create page to create new job application entry
-![new](readme-img/new.png)
 1. Create new job application
 ![new](readme-img/add.png)
 1. Delete a job application
@@ -72,7 +70,6 @@ This is the backend for Job Winner and here is the stack:
 1. Spring Reactive
 1. GraphQL
 1. Postgres DB
-
 
 ## To build 
 
