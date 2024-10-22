@@ -69,7 +69,7 @@ class InterviewControllerTest {
 	}
 
 	@Test
-	void getInterview() {
+	void testGetInterview() {
 		Interview Interview1 = new Interview();
 		when(interviewService.getInterview(anyInt())).thenReturn(Mono.just(Interview1));
 
