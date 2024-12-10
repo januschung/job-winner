@@ -1,12 +1,14 @@
 package com.tnite.jobwinner.model;
 
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +25,5 @@ public class Offer {
 	@Column("salary_offered")
 	private String salaryOffered;
 	private String description;
-	private String status;
 
 }

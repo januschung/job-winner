@@ -14,6 +14,5 @@ public class OfferInput {
 	private LocalDate offerDate;
 	private String salaryOffered;
 	private String description;
-	private String status;
 
 }

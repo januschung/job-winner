@@ -1,6 +1,6 @@
 package com.tnite.jobwinner.service;
 
-import com.tnite.jobwinner.model.AddJobApplicationInput;
+import com.tnite.jobwinner.model.JobApplicationInput;
 import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,8 +30,8 @@ public class JobApplicationServiceTest {
 
 	private JobApplication jobApplication1;
 	private JobApplication jobApplication2;
-	private AddJobApplicationInput addJobApplicationInput1;
-	private AddJobApplicationInput addJobApplicationInput2;
+	private JobApplicationInput addJobApplicationInput1;
+	private JobApplicationInput addJobApplicationInput2;
 	private List<JobApplication> jobApplicationList;
 
 	@BeforeEach
@@ -46,11 +46,11 @@ public class JobApplicationServiceTest {
 		jobApplication2.setCompanyName("Company B");
 		jobApplication2.setJobTitle("Manager");
 
-		addJobApplicationInput1 = new AddJobApplicationInput();
+		addJobApplicationInput1 = new JobApplicationInput();
 		addJobApplicationInput1.setCompanyName("Company A");
 		addJobApplicationInput1.setJobTitle("Developer");
 
-		addJobApplicationInput2 = new AddJobApplicationInput();
+		addJobApplicationInput2 = new JobApplicationInput();
 		addJobApplicationInput2.setCompanyName("Company B");
 		addJobApplicationInput2.setJobTitle("Manager");
 

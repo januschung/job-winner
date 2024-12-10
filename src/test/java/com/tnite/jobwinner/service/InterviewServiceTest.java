@@ -1,7 +1,7 @@
 package com.tnite.jobwinner.service;
 
 import com.tnite.jobwinner.model.Interview;
-import com.tnite.jobwinner.model.AddInterviewInput;
+import com.tnite.jobwinner.model.InterviewInput;
 import com.tnite.jobwinner.repo.InterviewRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,27 +27,27 @@ class InterviewServiceTest {
 	@InjectMocks
 	private InterviewService interviewService;
 
-	private Interview mockInterview1;
-	private Interview mockInterview2;
-	private AddInterviewInput mockInterviewInput;
-	private Interview mockUpdatedInterview;
+	private Interview interview1;
+	private Interview interview2;
+	private InterviewInput interviewInput;
+	private Interview updatedInterview;
 
 	@BeforeEach
 	void setUp() {
-		mockInterview1 = new Interview(1, 1, LocalDate.now(), "John Doe", "Technical Interview", "scheduled");
-		mockInterview2 = new Interview(2, 1, LocalDate.now(), "Jane Doe", "HR Interview", "closed");
-		mockInterviewInput = new AddInterviewInput(1, LocalDate.now(), "John Doe", "Technical Interview", "scheduled");
-		mockUpdatedInterview = new Interview(1, 1, LocalDate.now(), "John Doe", "Technical Interview", "closed");
+		interview1 = new Interview(1, 1, LocalDate.now(), "John Doe", "Technical Interview", "scheduled");
+		interview2 = new Interview(2, 1, LocalDate.now(), "Jane Doe", "HR Interview", "closed");
+		interviewInput = new InterviewInput(1, LocalDate.now(), "John Doe", "Technical Interview", "scheduled");
+		updatedInterview = new Interview(1, 1, LocalDate.now(), "John Doe", "Technical Interview", "closed");
 	}
 
 	@Test
 	void testAddInterview() {
-		when(interviewRepository.save(any(Interview.class))).thenReturn(Mono.just(mockInterview1));
+		when(interviewRepository.save(any(Interview.class))).thenReturn(Mono.just(interview1));
 
-		Mono<Interview> result = interviewService.addInterview(mockInterviewInput);
+		Mono<Interview> result = interviewService.addInterview(interviewInput);
 
 		StepVerifier.create(result)
-			.expectNextMatches(savedInterview -> savedInterview.getJobApplicationId().equals(mockInterviewInput.getJobApplicationId()))
+			.expectNextMatches(savedInterview -> savedInterview.getJobApplicationId().equals(interviewInput.getJobApplicationId()))
 			.verifyComplete();
 
 		verify(interviewRepository, times(1)).save(any(Interview.class));
@@ -55,10 +55,10 @@ class InterviewServiceTest {
 
 	@Test
 	void testUpdateInterview() {
-		when(interviewRepository.findById(1)).thenReturn(Mono.just(mockInterview1));
-		when(interviewRepository.save(any(Interview.class))).thenReturn(Mono.just(mockUpdatedInterview));
+		when(interviewRepository.findById(1)).thenReturn(Mono.just(interview1));
+		when(interviewRepository.save(any(Interview.class))).thenReturn(Mono.just(updatedInterview));
 
-		Mono<Interview> result = interviewService.updateInterview(mockUpdatedInterview);
+		Mono<Interview> result = interviewService.updateInterview(updatedInterview);
 
 		StepVerifier.create(result)
 			.expectNextMatches(interview -> interview.getStatus().equals("closed"))
@@ -70,13 +70,13 @@ class InterviewServiceTest {
 
 	@Test
 	void getInterviewByJobApplicationId() {
-		when(interviewRepository.findAllByJobApplicationId(1)).thenReturn(Flux.just(mockInterview1, mockInterview2));
+		when(interviewRepository.findAllByJobApplicationId(1)).thenReturn(Flux.just(interview1, interview2));
 
 		Flux<Interview> result = interviewService.getInterviewByJobApplicationId(1);
 
 		StepVerifier.create(result)
-			.expectNext(mockInterview1)
-			.expectNext(mockInterview2)
+			.expectNext(interview1)
+			.expectNext(interview2)
 			.verifyComplete();
 
 		verify(interviewRepository, times(1)).findAllByJobApplicationId(1);
@@ -84,7 +84,7 @@ class InterviewServiceTest {
 
 	@Test
 	void testGetInterview() {
-		when(interviewRepository.findById(1)).thenReturn(Mono.just(mockInterview1));
+		when(interviewRepository.findById(1)).thenReturn(Mono.just(interview1));
 
 		Mono<Interview> result = interviewService.getInterview(1);
 
@@ -97,13 +97,13 @@ class InterviewServiceTest {
 
 	@Test
 	void testAllInterview() {
-		when(interviewRepository.findAll()).thenReturn(Flux.just(mockInterview1, mockInterview2));
+		when(interviewRepository.findAll()).thenReturn(Flux.just(interview1, interview2));
 
 		Flux<Interview> result = interviewService.allInterview();
 
 		StepVerifier.create(result)
-			.expectNext(mockInterview1)
-			.expectNext(mockInterview2)
+			.expectNext(interview1)
+			.expectNext(interview2)
 			.verifyComplete();
 
 		verify(interviewRepository, times(1)).findAll();

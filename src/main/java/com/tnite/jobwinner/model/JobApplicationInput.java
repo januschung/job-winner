@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddJobApplicationInput {
+public class JobApplicationInput {
     private String companyName;
     private String jobTitle;
     private String salaryRange;

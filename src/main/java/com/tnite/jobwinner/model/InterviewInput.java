@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddInterviewInput {
+public class InterviewInput {
 	private Integer jobApplicationId;
 	private LocalDate interviewDate;
 	private String interviewer;

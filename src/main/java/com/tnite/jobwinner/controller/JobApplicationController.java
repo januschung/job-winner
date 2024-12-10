@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
-import com.tnite.jobwinner.model.AddJobApplicationInput;
+import com.tnite.jobwinner.model.JobApplicationInput;
 import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.service.JobApplicationService;
 
@@ -39,7 +39,7 @@ public class JobApplicationController {
     
     
     @MutationMapping
-    public Mono<JobApplication> addJobApplication(@Argument AddJobApplicationInput addJobApplicationInput) {
+    public Mono<JobApplication> addJobApplication(@Argument JobApplicationInput addJobApplicationInput) {
         Mono<JobApplication> jobApplication = jobApplicationService.addJobApplication(addJobApplicationInput);
         return jobApplication;
     }

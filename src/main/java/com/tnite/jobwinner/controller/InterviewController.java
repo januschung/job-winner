@@ -1,7 +1,7 @@
 package com.tnite.jobwinner.controller;
 
 import com.tnite.jobwinner.model.Interview;
-import com.tnite.jobwinner.model.AddInterviewInput;
+import com.tnite.jobwinner.model.InterviewInput;
 import com.tnite.jobwinner.service.InterviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -20,7 +20,7 @@ public class InterviewController {
 	private InterviewService interviewService;
 
 	@MutationMapping
-	public Mono<Interview> addInterview(@Argument AddInterviewInput interviewInput) {
+	public Mono<Interview> addInterview(@Argument InterviewInput interviewInput) {
 		return interviewService.addInterview(interviewInput);
 	}
 
