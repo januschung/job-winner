@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tnite.jobwinner.model.AddJobApplicationInput;
+import com.tnite.jobwinner.model.JobApplicationInput;
 import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 
@@ -22,7 +22,7 @@ public class JobApplicationService {
     @Autowired
     private JobApplicationRepository jobApplicationRepository;
     
-    Function<AddJobApplicationInput, JobApplication> mapping = aji -> {
+    Function<JobApplicationInput, JobApplication> mapping = aji -> {
         var jobApplication = new JobApplication();
         jobApplication.setCompanyName(aji.getCompanyName());
         jobApplication.setJobTitle(aji.getJobTitle());
@@ -48,7 +48,7 @@ public class JobApplicationService {
     };
     
     
-    public Mono<JobApplication> addJobApplication(AddJobApplicationInput addJobApplicationInput) {
+    public Mono<JobApplication> addJobApplication(JobApplicationInput addJobApplicationInput) {
         Mono<JobApplication> jobApplication = jobApplicationRepository.save(mapping.apply(addJobApplicationInput));
         log.info("Added new job application: {}", addJobApplicationInput);
         return jobApplication;

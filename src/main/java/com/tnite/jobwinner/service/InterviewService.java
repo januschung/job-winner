@@ -1,7 +1,7 @@
 package com.tnite.jobwinner.service;
 
 import com.tnite.jobwinner.model.Interview;
-import com.tnite.jobwinner.model.AddInterviewInput;
+import com.tnite.jobwinner.model.InterviewInput;
 import com.tnite.jobwinner.repo.InterviewRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class InterviewService {
 	@Autowired
 	private InterviewRepository interviewRepository;
 
-	private Interview mapToInterview(AddInterviewInput interviewInput) {
+	private Interview mapToInterview(InterviewInput interviewInput) {
 		var interview = new Interview();
 		interview.setJobApplicationId(interviewInput.getJobApplicationId());
 		interview.setInterviewDate(interviewInput.getInterviewDate());
@@ -26,7 +26,7 @@ public class InterviewService {
 		return interview;
 	}
 
-	public Mono<Interview> addInterview(AddInterviewInput interviewInput) {
+	public Mono<Interview> addInterview(InterviewInput interviewInput) {
 		Interview interview = mapToInterview(interviewInput);
 		return interviewRepository.save(interview)
 			.doOnSuccess(p -> log.info("Added new interview: {}", p))

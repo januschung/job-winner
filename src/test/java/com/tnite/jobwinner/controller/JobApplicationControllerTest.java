@@ -1,8 +1,6 @@
 package com.tnite.jobwinner.controller;
 
-import com.tnite.jobwinner.model.AddInterviewInput;
-import com.tnite.jobwinner.model.AddJobApplicationInput;
-import com.tnite.jobwinner.model.Interview;
+import com.tnite.jobwinner.model.JobApplicationInput;
 import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.service.JobApplicationService;
 import org.junit.jupiter.api.Test;
@@ -28,9 +26,9 @@ class JobApplicationControllerTest {
 
 	@Test
 	void testAddJobApplication() {
-		AddJobApplicationInput addJobApplicationInput = new AddJobApplicationInput();
+		JobApplicationInput addJobApplicationInput = new JobApplicationInput();
 		JobApplication jobApplication = new JobApplication();
-		when(jobApplicationService.addJobApplication(any(AddJobApplicationInput.class))).thenReturn(Mono.just(jobApplication));
+		when(jobApplicationService.addJobApplication(any(JobApplicationInput.class))).thenReturn(Mono.just(jobApplication));
 
 		Mono<JobApplication> result = jobApplicationController.addJobApplication(addJobApplicationInput);
 

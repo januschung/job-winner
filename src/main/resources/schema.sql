@@ -39,8 +39,8 @@ create table if not exists offer (
     offer_date date not null,
     salary_offered varchar(255),
     description varchar(500),
-    status varchar(20),
-    foreign key (job_application_id) references job_application(id) on delete cascade
+    foreign key (job_application_id) references job_application(id) on delete cascade,
+    constraint job_application_unique unique (job_application_id)
 );
 
 insert into profile(id)

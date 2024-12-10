@@ -1,13 +1,13 @@
 type Query {
     jobApplicationById(id: ID): JobApplication
-    jobApplicationByCompanyName(companyName: String): [JobApplication]
     allJobApplication: [JobApplication]
     profileById(id: ID): Profile
     searchJobApplications(searchTerm: String!): [JobApplication]
     allInterview: [Interview]
     allInterviewByJobApplicationId(jobApplicationId: Int!): [Interview]
     interviewById(id: ID): Interview
-    allOfferByApplicationId(jobApplicationId: Int!): [Offer]
+    allOffer: [Offer]
+    offerByJobApplicationId(jobApplicationId: Int!): Offer
 }
 
 type JobApplication {
@@ -41,7 +41,6 @@ type Offer {
     offerDate: String!
     salaryOffered: String
     description: String
-    status: String
 }
 
 type Interview {
@@ -60,8 +59,8 @@ type Mutation {
     updateProfile(profile: UpdateProfileInput): Profile
     addInterview(interviewInput: AddInterviewInput): Interview
     updateInterview(id: ID!, interview: UpdateInterviewInput): Interview
-    addOffer(offerInput: AddOfferInput): Offer
-    updateOffer(id: ID!, offer: UpdateOfferInput): Offer
+    addOffer(offerInput: OfferInput): Offer
+    updateOffer(offer: UpdateOfferInput): Offer
 }
 
 input AddJobApplicationInput {
@@ -116,18 +115,17 @@ input UpdateInterviewInput {
     status: String
 }
 
-input AddOfferInput {
+input OfferInput {
     jobApplicationId: Int!
     offerDate: String!
     salaryOffered: String
     description: String
-    status: String
 }
 
 input UpdateOfferInput {
+    id: ID!
     jobApplicationId: Int!
     offerDate: String!
     salaryOffered: String
     description: String
-    status: String
 }

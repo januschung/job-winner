@@ -1,6 +1,6 @@
 package com.tnite.jobwinner.controller;
 
-import com.tnite.jobwinner.model.AddInterviewInput;
+import com.tnite.jobwinner.model.InterviewInput;
 import com.tnite.jobwinner.model.Interview;
 import com.tnite.jobwinner.service.InterviewService;
 import org.junit.jupiter.api.Test;
@@ -27,9 +27,9 @@ class InterviewControllerTest {
 
 	@Test
 	void testAddInterview() {
-		AddInterviewInput addInterviewInput = new AddInterviewInput();
+		InterviewInput addInterviewInput = new InterviewInput();
 		Interview interview = new Interview();
-		when(interviewService.addInterview(any(AddInterviewInput.class))).thenReturn(Mono.just(interview));
+		when(interviewService.addInterview(any(InterviewInput.class))).thenReturn(Mono.just(interview));
 
 		Mono<Interview> result = interviewController.addInterview(addInterviewInput);
 
