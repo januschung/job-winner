@@ -40,27 +40,22 @@ public class JobApplicationController {
     
     @MutationMapping
     public Mono<JobApplication> addJobApplication(@Argument JobApplicationInput addJobApplicationInput) {
-        Mono<JobApplication> jobApplication = jobApplicationService.addJobApplication(addJobApplicationInput);
-        return jobApplication;
+        return jobApplicationService.addJobApplication(addJobApplicationInput);
     }
     
     @MutationMapping
     public Mono<JobApplication> updateJobApplication(@Argument JobApplication jobApplication) {
         return jobApplicationService.updateJobApplication(jobApplication);
     }
-    
 
     @MutationMapping
     public Mono<JobApplication> deleteJobApplication(@Argument @NonNull Integer id) {
-        final Mono<JobApplication> jobApplication = jobApplicationService.deleteJobApplication(id);
-        return jobApplication;
-
+        return jobApplicationService.deleteJobApplication(id);
     }
         
     @QueryMapping
     public Flux<JobApplication> allJobApplication() {
-        Flux<JobApplication> jobApplications = jobApplicationService.allJobApplication(); 
-        return jobApplications;
+        return jobApplicationService.allJobApplication();
     }
 
     @QueryMapping

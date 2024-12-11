@@ -50,7 +50,7 @@ class JobApplicationControllerTest {
 		JobApplication jobApplication = new JobApplication();
 		when(jobApplicationService.deleteJobApplication(anyInt())).thenReturn(Mono.just(jobApplication));
 
-		Mono<JobApplication> result = jobApplicationService.deleteJobApplication(1);
+		Mono<JobApplication> result = jobApplicationController.deleteJobApplication(1);
 
 		assertEquals(jobApplication, result.block());
 	}

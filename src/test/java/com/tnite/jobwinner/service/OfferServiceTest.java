@@ -69,6 +69,34 @@ class OfferServiceTest {
 	}
 
 	@Test
+	void testDeleteOfferWhenOfferExistsThenReturnsOffer() {
+		when(offerRepository.findById(1)).thenReturn(Mono.just(offer1));
+		when(offerRepository.delete(offer1)).thenReturn(Mono.empty());
+
+		Mono<Offer> result = offerService.deleteOffer(1);
+
+		StepVerifier.create(result)
+			.expectNextMatches(offer -> offer.getDescription().equals("whatever1"))
+			.verifyComplete();
+
+		verify(offerRepository, times(1)).findById(1);
+		verify(offerRepository, times(1)).delete(offer1);
+	}
+
+	@Test
+	void testDeleteOfferWhenOfferNotExists() {
+		when(offerRepository.findById(1)).thenReturn(Mono.empty());
+
+		Mono<Offer> result = offerService.deleteOffer(1);
+
+		StepVerifier.create(result)
+			.verifyComplete();
+
+		verify(offerRepository, times(1)).findById(1);
+		verifyNoMoreInteractions(offerRepository);
+	}
+
+	@Test
 	void getOfferByJobApplicationId() {
 		when(offerRepository.findByJobApplicationId(1)).thenReturn(Mono.just(offer1));
 

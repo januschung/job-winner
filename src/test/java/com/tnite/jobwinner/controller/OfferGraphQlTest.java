@@ -53,7 +53,6 @@ public class OfferGraphQlTest {
 
     @Test
     void testAllOffer() {
-
         when(offerRepository.findAll()).thenReturn(Flux.fromIterable(List.of(offer1, offer2, offer3)));
 
         String document = """
@@ -96,7 +95,6 @@ public class OfferGraphQlTest {
 
 	@Test
 	void testAddOffer() {
-
 		when(offerRepository.save(any(Offer.class))).thenReturn(Mono.just(offer1));
 
         String document = """
@@ -127,7 +125,6 @@ public class OfferGraphQlTest {
 
 	@Test
 	void testUpdateOffer() {
-
 		when(offerRepository.findById(1)).thenReturn(Mono.just(offer1));
         when(offerRepository.save(any(Offer.class))).thenReturn(Mono.just(offer1_updated));
 
@@ -158,4 +155,31 @@ public class OfferGraphQlTest {
 		verify(offerRepository, times(1)).findById(1);
 		verify(offerRepository, times(1)).save(any(Offer.class));
 	}
+
+    @Test
+    void testDeleteOffer() {
+        when(offerRepository.findById(1)).thenReturn(Mono.just(offer1));
+        when(offerRepository.delete(offer1)).thenReturn(Mono.empty());
+
+        String document = """
+        mutation {
+            deleteOffer(id:1) {
+                id
+                jobApplicationId
+                offerDate
+                salaryOffered
+                description
+            }
+        }
+        """;
+
+        graphQlTester.document(document)
+            .execute()
+            .path("deleteOffer.description")
+            .entity(String.class)
+            .isEqualTo("whatever1");
+
+        verify(offerRepository, times(1)).findById(1);
+        verify(offerRepository, times(1)).delete(offer1);
+    }
 }
