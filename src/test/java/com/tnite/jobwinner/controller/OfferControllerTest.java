@@ -1,5 +1,6 @@
 package com.tnite.jobwinner.controller;
 
+import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.model.Offer;
 import com.tnite.jobwinner.model.OfferInput;
 import com.tnite.jobwinner.service.OfferService;
@@ -43,6 +44,16 @@ class OfferControllerTest {
 		when(offerService.updateOffer(any(Offer.class))).thenReturn(Mono.just(offer));
 
 		Mono<Offer> result = offerController.updateOffer(offer);
+
+		assertEquals(offer, result.block());
+	}
+
+	@Test
+	void testDeleteOffer() {
+		Offer offer = new Offer();
+		when(offerService.deleteOffer(anyInt())).thenReturn(Mono.just(offer));
+
+		Mono<Offer> result = offerController.deleteOffer(1);
 
 		assertEquals(offer, result.block());
 	}

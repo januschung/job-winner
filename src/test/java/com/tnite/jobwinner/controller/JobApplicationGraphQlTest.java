@@ -1,6 +1,5 @@
 package com.tnite.jobwinner.controller;
 
-
 import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -254,6 +253,31 @@ public class JobApplicationGraphQlTest {
             }
         }
         """, searchTerm);
+    }
+
+    @Test
+    void testDeleteJobApplication() {
+        when(jobApplicationRepository.findById(1)).thenReturn(Mono.just(jobApplication1));
+        when(jobApplicationRepository.delete(jobApplication1)).thenReturn(Mono.empty());
+
+        String document = """
+        mutation {
+            deleteJobApplication(id:1) {
+                id
+                companyName
+                jobTitle
+            }
+        }
+        """;
+
+        graphQlTester.document(document)
+            .execute()
+            .path("deleteJobApplication.companyName")
+            .entity(String.class)
+            .isEqualTo("Company A");
+
+        verify(jobApplicationRepository, times(1)).findById(1);
+        verify(jobApplicationRepository, times(1)).delete(jobApplication1);
     }
 
 }

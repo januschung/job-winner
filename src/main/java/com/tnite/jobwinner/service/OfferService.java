@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @Service
 @Slf4j
 public class OfferService {
@@ -49,6 +51,14 @@ public class OfferService {
 		existingOffer.setDescription(updatedOffer.getDescription());
 	}
 
+	public Mono<Offer> deleteOffer(Integer id) {
+		log.info("Deleting offer id {}", id);
+		return this.offerRepository.findById(id).switchIfEmpty(Mono.empty()).filter(Objects::nonNull)
+			.flatMap(offerToBeDeleted -> offerRepository
+				.delete(offerToBeDeleted)
+				.then(Mono.just(offerToBeDeleted))).log();
+	}
+
 	public Flux<Offer> allOffer() {
 		return offerRepository.findAll()
 			.doOnComplete(() -> log.info("Retrieved all Offers"))
@@ -64,4 +74,5 @@ public class OfferService {
 			.doOnSuccess(offer -> log.info("Retrieved Offer: {}", offer))
 			.doOnError(e -> log.error("Failed to retrieve Offer with jobApplicationId {}", jobApplicationId, e));
 	}
+
 }

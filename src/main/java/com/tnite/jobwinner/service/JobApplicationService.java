@@ -46,14 +46,12 @@ public class JobApplicationService {
         jobApplication.setStatus(ji.getStatus());
         return jobApplication;
     };
-    
-    
+
     public Mono<JobApplication> addJobApplication(JobApplicationInput addJobApplicationInput) {
         Mono<JobApplication> jobApplication = jobApplicationRepository.save(mapping.apply(addJobApplicationInput));
         log.info("Added new job application: {}", addJobApplicationInput);
         return jobApplication;
     }
-    
 
     public Mono<JobApplication> updateJobApplication(JobApplication jobApplication) {
         log.info("Updating job application id {}", jobApplication.getId());
@@ -69,26 +67,18 @@ public class JobApplicationService {
                     return jobApplicationRepository.save(jobApplication).log();
                 });
     }
-    
 
     public Mono<JobApplication> deleteJobApplication(@NonNull Integer id) {
-        final Mono<JobApplication> jobApplication = jobApplicationRepository.findById(id);
-        if (Objects.isNull(jobApplication)) {
-            return Mono.empty();
-        }
         log.info("Deleting job application id {}", id);
         return this.jobApplicationRepository.findById(id).switchIfEmpty(Mono.empty()).filter(Objects::nonNull)
                 .flatMap(jobApplicationToBeDeleted -> jobApplicationRepository
                         .delete(jobApplicationToBeDeleted)
                         .then(Mono.just(jobApplicationToBeDeleted))).log();
-
     }
-    
 
     public Flux<JobApplication> allJobApplication() {
         return this.jobApplicationRepository.findAll().log();
     }
-
 
     public Flux<JobApplication> searchJobApplications(String searchTerm) {
         return jobApplicationRepository.searchJobApplications(searchTerm);

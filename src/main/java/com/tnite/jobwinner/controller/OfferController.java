@@ -3,6 +3,7 @@ package com.tnite.jobwinner.controller;
 import com.tnite.jobwinner.model.OfferInput;
 import com.tnite.jobwinner.model.Offer;
 import com.tnite.jobwinner.service.OfferService;
+import io.micrometer.common.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -25,6 +26,11 @@ public class OfferController {
 	@MutationMapping
 	public Mono<Offer> updateOffer(@Argument Offer offer) {
 		return offerService.updateOffer(offer);
+	}
+
+	@MutationMapping
+	public Mono<Offer> deleteOffer(@Argument @NonNull Integer id) {
+		return offerService.deleteOffer(id);
 	}
 
 	@QueryMapping

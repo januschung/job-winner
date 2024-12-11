@@ -2,6 +2,7 @@ package com.tnite.jobwinner.service;
 
 import com.tnite.jobwinner.model.JobApplicationInput;
 import com.tnite.jobwinner.model.JobApplication;
+import com.tnite.jobwinner.model.Offer;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -91,6 +92,34 @@ public class JobApplicationServiceTest {
 
 		verify(jobApplicationRepository, times(1)).findById(1);
 		verify(jobApplicationRepository, times(1)).save(any(JobApplication.class));
+	}
+
+	@Test
+	void testDeleteJobApplicationWhenJobApplicationExistsThenReturnsJobApplication() {
+		when(jobApplicationRepository.findById(1)).thenReturn(Mono.just(jobApplication1));
+		when(jobApplicationRepository.delete(jobApplication1)).thenReturn(Mono.empty());
+
+		Mono<JobApplication> result = jobApplicationService.deleteJobApplication(1);
+
+		StepVerifier.create(result)
+			.expectNextMatches(JobApplication -> jobApplication1.getJobTitle().equals("Developer"))
+			.verifyComplete();
+
+		verify(jobApplicationRepository, times(1)).findById(1);
+		verify(jobApplicationRepository, times(1)).delete(jobApplication1);
+	}
+
+	@Test
+	void testDeleteJobApplicationWhenJobApplicationNotExists() {
+		when(jobApplicationRepository.findById(1)).thenReturn(Mono.empty());
+
+		Mono<JobApplication> result = jobApplicationService.deleteJobApplication(1);
+
+		StepVerifier.create(result)
+			.verifyComplete();
+
+		verify(jobApplicationRepository, times(1)).findById(1);
+		verifyNoMoreInteractions(jobApplicationRepository);
 	}
 
 	@Test

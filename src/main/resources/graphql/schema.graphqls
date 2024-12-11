@@ -61,6 +61,7 @@ type Mutation {
     updateInterview(id: ID!, interview: UpdateInterviewInput): Interview
     addOffer(offerInput: OfferInput): Offer
     updateOffer(offer: UpdateOfferInput): Offer
+    deleteOffer(id: ID): Offer
 }
 
 input AddJobApplicationInput {
