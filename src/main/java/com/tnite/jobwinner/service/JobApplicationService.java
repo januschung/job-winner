@@ -34,18 +34,6 @@ public class JobApplicationService {
         return jobApplication;
     };
     
-    Function<JobApplication, JobApplication> editMapping = ji -> {
-        var jobApplication = new JobApplication();
-        jobApplication.setId(ji.getId());
-        jobApplication.setCompanyName(ji.getCompanyName());
-        jobApplication.setJobTitle(ji.getJobTitle());
-        jobApplication.setSalaryRange(ji.getSalaryRange());
-        jobApplication.setJobUrl(ji.getJobUrl());
-        jobApplication.setAppliedDate(ji.getAppliedDate());
-        jobApplication.setDescription(ji.getDescription());
-        jobApplication.setStatus(ji.getStatus());
-        return jobApplication;
-    };
 
     public Mono<JobApplication> addJobApplication(JobApplicationInput addJobApplicationInput) {
         Mono<JobApplication> jobApplication = jobApplicationRepository.save(mapping.apply(addJobApplicationInput));

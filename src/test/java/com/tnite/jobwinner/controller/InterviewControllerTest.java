@@ -11,6 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -44,6 +46,29 @@ class InterviewControllerTest {
 		Mono<Interview> result = interviewController.updateInterview(Interview);
 
 		assertEquals(Interview, result.block());
+	}
+
+	@Test
+	void testDeleteInterview() {
+		Interview interview = new Interview();
+		when(interviewService.deleteInterview(anyInt())).thenReturn(Mono.just(interview));
+
+		Mono<Interview> result = interviewController.deleteInterview(1);
+
+		assertEquals(interview, result.block());
+	}
+
+	@Test
+	void testAllInterviewByJobApplicationId() {
+		Interview interview1 = new Interview(1, 1, LocalDate.now(), "John Doe", "HR Interview", "scheduled");
+		Interview interview2 = new Interview(2, 1, LocalDate.now(), "Jane Doe", "Technical Interview", "scheduled");
+		when(interviewService.getInterviewByJobApplicationId(1)).thenReturn(Flux.just(interview1, interview2));
+
+		Flux<Interview> result = interviewController.allInterviewByJobApplicationId(1);
+
+		assertEquals(2, result.collectList().block().size());
+		assertEquals(interview1, result.collectList().block().get(0));
+		assertEquals(interview2, result.collectList().block().get(1));
 	}
 
 	@Test

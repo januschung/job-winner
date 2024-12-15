@@ -69,6 +69,34 @@ class InterviewServiceTest {
 	}
 
 	@Test
+	void testDeleteInterviewWhenInterviewExistsThenReturnsInterview() {
+		when(interviewRepository.findById(1)).thenReturn(Mono.just(interview1));
+		when(interviewRepository.delete(interview1)).thenReturn(Mono.empty());
+
+		Mono<Interview> result = interviewService.deleteInterview(1);
+
+		StepVerifier.create(result)
+			.expectNextMatches(interview -> interview.getDescription().equals("Technical Interview"))
+			.verifyComplete();
+
+		verify(interviewRepository, times(1)).findById(1);
+		verify(interviewRepository, times(1)).delete(interview1);
+	}
+
+	@Test
+	void testDeleteInterviewWhenInterviewNotExists() {
+		when(interviewRepository.findById(1)).thenReturn(Mono.empty());
+
+		Mono<Interview> result = interviewService.deleteInterview(1);
+
+		StepVerifier.create(result)
+			.verifyComplete();
+
+		verify(interviewRepository, times(1)).findById(1);
+		verifyNoMoreInteractions(interviewRepository);
+	}
+
+	@Test
 	void getInterviewByJobApplicationId() {
 		when(interviewRepository.findAllByJobApplicationId(1)).thenReturn(Flux.just(interview1, interview2));
 

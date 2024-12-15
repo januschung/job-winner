@@ -2,12 +2,15 @@ package com.tnite.jobwinner.service;
 
 import com.tnite.jobwinner.model.Interview;
 import com.tnite.jobwinner.model.InterviewInput;
+import com.tnite.jobwinner.model.Offer;
 import com.tnite.jobwinner.repo.InterviewRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -41,6 +44,14 @@ public class InterviewService {
 			})
 			.doOnSuccess(p -> log.info("Updated interview: {}", p))
 			.doOnError(e -> log.error("Failed to update interview: {}", interview, e));
+	}
+
+	public Mono<Interview> deleteInterview(Integer id) {
+		log.info("Deleting interview id {}", id);
+		return this.interviewRepository.findById(id).switchIfEmpty(Mono.empty()).filter(Objects::nonNull)
+			.flatMap(interviewToBeDeleted -> interviewRepository
+				.delete(interviewToBeDeleted)
+				.then(Mono.just(interviewToBeDeleted))).log();
 	}
 
 	private void updateInterviewDetails(Interview existingInterview, Interview updatedInterview) {
