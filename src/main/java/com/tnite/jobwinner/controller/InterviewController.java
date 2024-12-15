@@ -2,7 +2,9 @@ package com.tnite.jobwinner.controller;
 
 import com.tnite.jobwinner.model.Interview;
 import com.tnite.jobwinner.model.InterviewInput;
+import com.tnite.jobwinner.model.Offer;
 import com.tnite.jobwinner.service.InterviewService;
+import io.micrometer.common.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -27,6 +29,11 @@ public class InterviewController {
 	@MutationMapping
 	public Mono<Interview> updateInterview(@Argument Interview interview) {
 		return interviewService.updateInterview(interview);
+	}
+
+	@MutationMapping
+	public Mono<Interview> deleteInterview(@Argument @NonNull Integer id) {
+		return interviewService.deleteInterview(id);
 	}
 
 	@QueryMapping

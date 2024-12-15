@@ -227,4 +227,32 @@ public class InterviewGraphQlTest {
 		verify(interviewRepository, times(1)).findById(1);
 		verify(interviewRepository, times(1)).save(any(Interview.class));
 	}
+
+    @Test
+    void testDeleteOffer() {
+        when(interviewRepository.findById(1)).thenReturn(Mono.just(interview1));
+        when(interviewRepository.delete(interview1)).thenReturn(Mono.empty());
+
+        String document = """
+        mutation {
+            deleteInterview(id:1) {
+                id
+                jobApplicationId
+                interviewDate
+                interviewer
+                description
+                status
+            }
+        }
+        """;
+
+        graphQlTester.document(document)
+            .execute()
+            .path("deleteInterview.description")
+            .entity(String.class)
+            .isEqualTo("Technical interview");
+
+        verify(interviewRepository, times(1)).findById(1);
+        verify(interviewRepository, times(1)).delete(interview1);
+    }
 }

@@ -59,6 +59,7 @@ type Mutation {
     updateProfile(profile: UpdateProfileInput): Profile
     addInterview(interviewInput: AddInterviewInput): Interview
     updateInterview(id: ID!, interview: UpdateInterviewInput): Interview
+    deleteInterview(id: ID): Interview
     addOffer(offerInput: OfferInput): Offer
     updateOffer(offer: UpdateOfferInput): Offer
     deleteOffer(id: ID): Offer

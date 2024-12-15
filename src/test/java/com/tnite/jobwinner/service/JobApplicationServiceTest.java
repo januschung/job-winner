@@ -2,7 +2,6 @@ package com.tnite.jobwinner.service;
 
 import com.tnite.jobwinner.model.JobApplicationInput;
 import com.tnite.jobwinner.model.JobApplication;
-import com.tnite.jobwinner.model.Offer;
 import com.tnite.jobwinner.repo.JobApplicationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,6 +56,28 @@ public class JobApplicationServiceTest {
 		addJobApplicationInput2.setJobTitle("Manager");
 
 		jobApplicationList = Arrays.asList(jobApplication1, jobApplication2);
+	}
+
+	@Test
+	void testMapping() {
+		JobApplicationInput input = new JobApplicationInput();
+		input.setCompanyName("Company A");
+		input.setJobTitle("Developer");
+		input.setSalaryRange("100000");
+		input.setJobUrl("https://example.com");
+		input.setAppliedDate(LocalDate.now());
+		input.setDescription("whatever");
+		input.setStatus("Open");
+
+		JobApplication result = jobApplicationService.mapping.apply(input);
+
+		assertEquals(input.getCompanyName(), result.getCompanyName());
+		assertEquals(input.getJobTitle(), result.getJobTitle());
+		assertEquals(input.getSalaryRange(), result.getSalaryRange());
+		assertEquals(input.getJobUrl(), result.getJobUrl());
+		assertEquals(input.getAppliedDate(), result.getAppliedDate());
+		assertEquals(input.getDescription(), result.getDescription());
+		assertEquals(input.getStatus(), result.getStatus());
 	}
 
 	@Test
