@@ -3,6 +3,7 @@ package com.tnite.jobwinner.model;
 import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -25,5 +26,8 @@ public class Offer {
 	@Column("salary_offered")
 	private String salaryOffered;
 	private String description;
+
+	@Transient
+	private JobApplication jobApplication;
 
 }

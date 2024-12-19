@@ -2,8 +2,10 @@ package com.tnite.jobwinner.service;
 
 import com.tnite.jobwinner.model.Interview;
 import com.tnite.jobwinner.model.InterviewInput;
+import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.model.Offer;
 import com.tnite.jobwinner.repo.InterviewRepository;
+import com.tnite.jobwinner.repo.JobApplicationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class InterviewService {
 
 	@Autowired
 	private InterviewRepository interviewRepository;
+
+	@Autowired
+	private JobApplicationRepository jobApplicationRepository;
 
 	private Interview mapToInterview(InterviewInput interviewInput) {
 		var interview = new Interview();
@@ -74,8 +79,19 @@ public class InterviewService {
 			.doOnError(e -> log.error("Failed to retrieve interviews", e));
 	}
 
-	public Mono<Interview> getInterview(Integer id) {
+	public Mono<Interview> getInterviewById(Integer id) {
 		return interviewRepository.findById(id)
+			.flatMap(interview -> {
+				// Fetch the related JobApplication based on jobApplicationId from the Interview
+				return jobApplicationRepository.findById(interview.getJobApplicationId())
+					.map(jobApplication -> {
+						interview.setJobApplication(jobApplication);
+						return interview;
+					})
+					.defaultIfEmpty(interview) // If no JobApplication is found, return the Interview as is
+					.doOnSuccess(i -> log.info("Retrieved interview with job application: {}", i))
+					.doOnError(e -> log.error("Failed to fetch job application for interview id {}", id, e));
+			})
 			.switchIfEmpty(Mono.defer(() -> {
 				log.warn("Interview with id {} not found", id);
 				return Mono.empty();

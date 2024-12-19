@@ -68,6 +68,10 @@ public class JobApplicationService {
         return this.jobApplicationRepository.findAll().log();
     }
 
+    public Mono<JobApplication> getJobApplicationById(Integer id) {
+        return jobApplicationRepository.findById(id);
+    }
+
     public Flux<JobApplication> searchJobApplications(String searchTerm) {
         return jobApplicationRepository.searchJobApplications(searchTerm);
     }

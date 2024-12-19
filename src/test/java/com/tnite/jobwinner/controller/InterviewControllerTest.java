@@ -2,7 +2,9 @@ package com.tnite.jobwinner.controller;
 
 import com.tnite.jobwinner.model.InterviewInput;
 import com.tnite.jobwinner.model.Interview;
+import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.service.InterviewService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,41 +29,47 @@ class InterviewControllerTest {
 	@Mock
 	private InterviewService interviewService;
 
+	private Interview interview1;
+	private Interview interview2;
+	private JobApplication jobApplication;
+
+	@BeforeEach
+	void setUp(){
+		jobApplication = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "abc");
+		interview1 = new Interview(1, 1, LocalDate.now(), "John Doe", "HR Interview", "scheduled", jobApplication);
+		interview2 = new Interview(2, 1, LocalDate.now(), "Jane Doe", "Technical Interview", "scheduled", jobApplication);
+	}
+
 	@Test
 	void testAddInterview() {
 		InterviewInput addInterviewInput = new InterviewInput();
-		Interview interview = new Interview();
-		when(interviewService.addInterview(any(InterviewInput.class))).thenReturn(Mono.just(interview));
+		when(interviewService.addInterview(any(InterviewInput.class))).thenReturn(Mono.just(interview1));
 
 		Mono<Interview> result = interviewController.addInterview(addInterviewInput);
 
-		assertEquals(interview, result.block());
+		assertEquals(interview1, result.block());
 	}
 
 	@Test
 	void testUpdateInterview() {
-		Interview Interview = new Interview();
-		when(interviewService.updateInterview(any(Interview.class))).thenReturn(Mono.just(Interview));
+		when(interviewService.updateInterview(any(Interview.class))).thenReturn(Mono.just(interview1));
 
-		Mono<Interview> result = interviewController.updateInterview(Interview);
+		Mono<Interview> result = interviewController.updateInterview(interview1);
 
-		assertEquals(Interview, result.block());
+		assertEquals(interview1, result.block());
 	}
 
 	@Test
 	void testDeleteInterview() {
-		Interview interview = new Interview();
-		when(interviewService.deleteInterview(anyInt())).thenReturn(Mono.just(interview));
+		when(interviewService.deleteInterview(anyInt())).thenReturn(Mono.just(interview1));
 
 		Mono<Interview> result = interviewController.deleteInterview(1);
 
-		assertEquals(interview, result.block());
+		assertEquals(interview1, result.block());
 	}
 
 	@Test
 	void testAllInterviewByJobApplicationId() {
-		Interview interview1 = new Interview(1, 1, LocalDate.now(), "John Doe", "HR Interview", "scheduled");
-		Interview interview2 = new Interview(2, 1, LocalDate.now(), "Jane Doe", "Technical Interview", "scheduled");
 		when(interviewService.getInterviewByJobApplicationId(1)).thenReturn(Flux.just(interview1, interview2));
 
 		Flux<Interview> result = interviewController.allInterviewByJobApplicationId(1);
@@ -73,8 +81,6 @@ class InterviewControllerTest {
 
 	@Test
 	void testAllInterview() {
-		Interview interview1 = new Interview();
-		Interview interview2 = new Interview();
 		when(interviewService.allInterview()).thenReturn(Flux.just(interview1, interview2));
 
 		Flux<Interview> result = interviewController.allInterview();
@@ -95,11 +101,10 @@ class InterviewControllerTest {
 
 	@Test
 	void testGetInterview() {
-		Interview Interview1 = new Interview();
-		when(interviewService.getInterview(anyInt())).thenReturn(Mono.just(Interview1));
+		when(interviewService.getInterviewById(anyInt())).thenReturn(Mono.just(interview1));
 
 		Mono<Interview> result = interviewController.interviewById(1);
 
-		assertEquals(Interview1, result.block());
+		assertEquals(interview1, result.block());
 	}
 }

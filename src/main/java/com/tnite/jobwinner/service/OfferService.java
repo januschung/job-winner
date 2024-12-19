@@ -1,7 +1,9 @@
 package com.tnite.jobwinner.service;
 
+import com.tnite.jobwinner.model.Interview;
 import com.tnite.jobwinner.model.OfferInput;
 import com.tnite.jobwinner.model.Offer;
+import com.tnite.jobwinner.repo.JobApplicationRepository;
 import com.tnite.jobwinner.repo.OfferRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class OfferService {
 
 	@Autowired
 	private OfferRepository offerRepository;
+
+	@Autowired
+	private JobApplicationRepository jobApplicationRepository;
 
 	private Offer mapToOffer(OfferInput offerInput) {
 		var offer = new Offer();
@@ -61,8 +66,18 @@ public class OfferService {
 
 	public Flux<Offer> allOffer() {
 		return offerRepository.findAll()
-			.doOnComplete(() -> log.info("Retrieved all Offers"))
-			.doOnError(e -> log.error("Failed to retrieve Offers", e));
+			.flatMap(offer ->
+				jobApplicationRepository.findById(offer.getJobApplicationId())
+					.map(jobApplication -> {
+						offer.setJobApplication(jobApplication);
+						return offer;
+					})
+					.defaultIfEmpty(offer)  // If JobApplication not found, just return the offer without setting JobApplication
+					.doOnSuccess(o -> log.info("Retrieved offer with job application: {}", o))
+					.doOnError(e -> log.error("Failed to fetch job application for offer", e))
+			)
+			.doOnComplete(() -> log.info("Retrieved all offers"))
+			.doOnError(e -> log.error("Failed to retrieve offers", e));
 	}
 
 	public Mono<Offer> offerByJobApplicationId(Integer jobApplicationId) {

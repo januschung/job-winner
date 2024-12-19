@@ -2,6 +2,7 @@ package com.tnite.jobwinner.controller;
 
 import com.tnite.jobwinner.model.OfferInput;
 import com.tnite.jobwinner.model.Offer;
+import com.tnite.jobwinner.service.JobApplicationService;
 import com.tnite.jobwinner.service.OfferService;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class OfferController {
 
 	@Autowired
 	private OfferService offerService;
+
+	@Autowired
+	private JobApplicationService jobApplicationService;
 
 	@MutationMapping
 	public Mono<Offer> addOffer(@Argument OfferInput offerInput) {

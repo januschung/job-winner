@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -23,4 +24,7 @@ public class Interview {
 	private String interviewer;
 	private String description;
 	private String status;
+
+	@Transient
+	private JobApplication jobApplication;
 }

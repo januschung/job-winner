@@ -48,7 +48,7 @@ public class InterviewController {
 
 	@QueryMapping
 	public Mono<Interview> interviewById(@Argument Integer id) {
-		return interviewService.getInterview(id);
+		return interviewService.getInterviewById(id);
 	}
 
 }

@@ -41,6 +41,7 @@ type Offer {
     offerDate: String!
     salaryOffered: String
     description: String
+    jobApplication: JobApplication
 }
 
 type Interview {
@@ -50,6 +51,7 @@ type Interview {
     interviewer: String
     description: String
     status: String
+    jobApplication: JobApplication
 }
 
 type Mutation {
