@@ -2,7 +2,9 @@ package com.tnite.jobwinner.service;
 
 import com.tnite.jobwinner.model.Interview;
 import com.tnite.jobwinner.model.InterviewInput;
+import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.repo.InterviewRepository;
+import com.tnite.jobwinner.repo.JobApplicationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +26,9 @@ class InterviewServiceTest {
 	@Mock
 	private InterviewRepository interviewRepository;
 
+	@Mock
+	private JobApplicationRepository jobApplicationRepository;
+
 	@InjectMocks
 	private InterviewService interviewService;
 
@@ -31,13 +36,15 @@ class InterviewServiceTest {
 	private Interview interview2;
 	private InterviewInput interviewInput;
 	private Interview updatedInterview;
+	private JobApplication jobApplication;
 
 	@BeforeEach
 	void setUp() {
-		interview1 = new Interview(1, 1, LocalDate.now(), "John Doe", "Technical Interview", "scheduled");
-		interview2 = new Interview(2, 1, LocalDate.now(), "Jane Doe", "HR Interview", "closed");
+		jobApplication = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "abc");
+		interview1 = new Interview(1, 1, LocalDate.now(), "John Doe", "Technical Interview", "scheduled", jobApplication);
+		interview2 = new Interview(2, 1, LocalDate.now(), "Jane Doe", "HR Interview", "closed", jobApplication);
 		interviewInput = new InterviewInput(1, LocalDate.now(), "John Doe", "Technical Interview", "scheduled");
-		updatedInterview = new Interview(1, 1, LocalDate.now(), "John Doe", "Technical Interview", "closed");
+		updatedInterview = new Interview(1, 1, LocalDate.now(), "John Doe", "Technical Interview", "closed", jobApplication);
 	}
 
 	@Test
@@ -113,8 +120,9 @@ class InterviewServiceTest {
 	@Test
 	void testGetInterview() {
 		when(interviewRepository.findById(1)).thenReturn(Mono.just(interview1));
+		when(jobApplicationRepository.findById(1)).thenReturn(Mono.just(jobApplication));
 
-		Mono<Interview> result = interviewService.getInterview(1);
+		Mono<Interview> result = interviewService.getInterviewById(1);
 
 		StepVerifier.create(result)
 			.expectNextMatches(i -> i.getId().equals(1))

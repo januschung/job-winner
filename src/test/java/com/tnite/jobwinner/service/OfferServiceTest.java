@@ -1,7 +1,9 @@
 package com.tnite.jobwinner.service;
 
+import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.model.Offer;
 import com.tnite.jobwinner.model.OfferInput;
+import com.tnite.jobwinner.repo.JobApplicationRepository;
 import com.tnite.jobwinner.repo.OfferRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,9 @@ class OfferServiceTest {
 	@Mock
 	private OfferRepository offerRepository;
 
+	@Mock
+	private JobApplicationRepository jobApplicationRepository;
+
 	@InjectMocks
 	private OfferService offerService;
 
@@ -31,13 +36,17 @@ class OfferServiceTest {
 	private Offer offer2;
 	private OfferInput offerInput;
 	private Offer updatedoffer;
+	private JobApplication jobApplication1;
+	private JobApplication jobApplication2;
 
 	@BeforeEach
 	void setUp() {
-		offer1 = new Offer(1, 1, LocalDate.now(), "1", "whatever1");
-		offer2 = new Offer(2, 2, LocalDate.now(), "2", "whatever2");
+		jobApplication1 = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "open");
+		jobApplication2 = new JobApplication(2, "Company A", "QA", "", "", LocalDate.now(), "", "open");
+		offer1 = new Offer(1, 1, LocalDate.now(), "1", "whatever1", jobApplication1);
+		offer2 = new Offer(2, 2, LocalDate.now(), "2", "whatever2", jobApplication2);
 		offerInput = new OfferInput(1, LocalDate.now(), "1", "whatever1");
-		updatedoffer = new Offer(1, 1, LocalDate.now(), "10", "whatsoever1");
+		updatedoffer = new Offer(1, 1, LocalDate.now(), "10", "whatsoever1", jobApplication1);
 	}
 
 	@Test
@@ -112,6 +121,8 @@ class OfferServiceTest {
 	@Test
 	void testAllOffer() {
 		when(offerRepository.findAll()).thenReturn(Flux.just(offer1, offer2));
+		when(jobApplicationRepository.findById(1)).thenReturn(Mono.just(jobApplication1));
+		when(jobApplicationRepository.findById(2)).thenReturn(Mono.just(jobApplication2));
 
 		Flux<Offer> result = offerService.allOffer();
 
@@ -121,5 +132,6 @@ class OfferServiceTest {
 			.verifyComplete();
 
 		verify(offerRepository, times(1)).findAll();
+		verify(jobApplicationRepository, times(2)).findById(anyInt());
 	}
 }

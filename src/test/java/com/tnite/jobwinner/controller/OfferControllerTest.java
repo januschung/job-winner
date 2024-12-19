@@ -4,6 +4,7 @@ import com.tnite.jobwinner.model.JobApplication;
 import com.tnite.jobwinner.model.Offer;
 import com.tnite.jobwinner.model.OfferInput;
 import com.tnite.jobwinner.service.OfferService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,41 +30,48 @@ class OfferControllerTest {
 	@Mock
 	private OfferService offerService;
 
+	private Offer offer1;
+	private Offer offer2;
+	private JobApplication jobApplication;
+
+	@BeforeEach
+	void setUp() {
+		jobApplication = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "abc");
+
+		offer1 = new Offer(1, 1, LocalDate.of(2024, 9, 2), "1", "whatever1", jobApplication);
+		offer2 = new Offer(2, 1, LocalDate.of(2024, 9, 2), "2", "whatever2", jobApplication);
+	}
+
 	@Test
 	void testAddOffer() {
 		OfferInput offerInput = new OfferInput();
-		Offer Offer = new Offer();
-		when(offerService.addOffer(any(OfferInput.class))).thenReturn(Mono.just(Offer));
+		when(offerService.addOffer(any(OfferInput.class))).thenReturn(Mono.just(offer1));
 
 		Mono<Offer> result = offerController.addOffer(offerInput);
 
-		assertEquals(Offer, result.block());
+		assertEquals(offer1, result.block());
 	}
 
 	@Test
 	void testUpdateOffer() {
-		Offer offer = new Offer();
-		when(offerService.updateOffer(any(Offer.class))).thenReturn(Mono.just(offer));
+		when(offerService.updateOffer(any(Offer.class))).thenReturn(Mono.just(offer1));
 
-		Mono<Offer> result = offerController.updateOffer(offer);
+		Mono<Offer> result = offerController.updateOffer(offer1);
 
-		assertEquals(offer, result.block());
+		assertEquals(offer1, result.block());
 	}
 
 	@Test
 	void testDeleteOffer() {
-		Offer offer = new Offer();
-		when(offerService.deleteOffer(anyInt())).thenReturn(Mono.just(offer));
+		when(offerService.deleteOffer(anyInt())).thenReturn(Mono.just(offer1));
 
 		Mono<Offer> result = offerController.deleteOffer(1);
 
-		assertEquals(offer, result.block());
+		assertEquals(offer1, result.block());
 	}
 
 	@Test
 	void testAllOffer() {
-		Offer offer1 = new Offer();
-		Offer offer2 = new Offer();
 		when(offerService.allOffer()).thenReturn(Flux.just(offer1, offer2));
 
 		Flux<Offer> result = offerController.allOffer();
@@ -82,7 +92,6 @@ class OfferControllerTest {
 
 	@Test
 	void testOfferByJobApplicationId() {
-		Offer offer1 = new Offer();
 		when(offerService.offerByJobApplicationId(anyInt())).thenReturn(Mono.just(offer1));
 
 		Mono<Offer> result = offerController.offerByJobApplicationId(1);
