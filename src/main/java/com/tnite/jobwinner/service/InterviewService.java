@@ -74,7 +74,20 @@ public class InterviewService {
 	}
 
 	public Flux<Interview> allInterview() {
+//		return interviewRepository.findAll()
+//			.doOnComplete(() -> log.info("Retrieved all interviews"))
+//			.doOnError(e -> log.error("Failed to retrieve interviews", e));
 		return interviewRepository.findAll()
+			.flatMap(interview ->
+				jobApplicationRepository.findById(interview.getJobApplicationId())
+					.map(jobApplication -> {
+						interview.setJobApplication(jobApplication);
+						return interview;
+					})
+					.defaultIfEmpty(interview)  // If JobApplication not found, just return the offer without setting JobApplication
+					.doOnSuccess(o -> log.info("Retrieved interview with job application: {}", o))
+					.doOnError(e -> log.error("Failed to fetch job application for interview", e))
+			)
 			.doOnComplete(() -> log.info("Retrieved all interviews"))
 			.doOnError(e -> log.error("Failed to retrieve interviews", e));
 	}

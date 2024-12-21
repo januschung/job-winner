@@ -134,6 +134,7 @@ class InterviewServiceTest {
 	@Test
 	void testAllInterview() {
 		when(interviewRepository.findAll()).thenReturn(Flux.just(interview1, interview2));
+		when(jobApplicationRepository.findById(1)).thenReturn(Mono.just(jobApplication));
 
 		Flux<Interview> result = interviewService.allInterview();
 
@@ -143,5 +144,6 @@ class InterviewServiceTest {
 			.verifyComplete();
 
 		verify(interviewRepository, times(1)).findAll();
+		verify(jobApplicationRepository, times(2)).findById(anyInt());
 	}
 }
