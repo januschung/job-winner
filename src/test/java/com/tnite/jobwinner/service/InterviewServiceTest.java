@@ -17,6 +17,7 @@ import reactor.test.StepVerifier;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -145,5 +146,32 @@ class InterviewServiceTest {
 
 		verify(interviewRepository, times(1)).findAll();
 		verify(jobApplicationRepository, times(2)).findById(anyInt());
+	}
+
+	@Test
+	void testUpdateOutdatedInterviewToExpiredWithThreeRecords() {
+		when(interviewRepository.updateExpiredInterviews()).thenReturn(Mono.just(3));
+
+		Mono<Integer> result = interviewService.updateOutdatedInterviewToExpired();
+
+		StepVerifier.create(result)
+			.assertNext(updatedRows -> assertEquals(3, updatedRows, "Expected 3 rows to be updated"))
+			.verifyComplete();
+
+		verify(interviewRepository, times(1)).updateExpiredInterviews();
+	}
+
+	@Test
+	void testUpdateOutdatedInterviewToExpiredNoRecordsToUpdate() {
+		when(interviewRepository.updateExpiredInterviews())
+			.thenReturn(Mono.just(0));
+
+		Mono<Integer> result = interviewService.updateOutdatedInterviewToExpired();
+
+		StepVerifier.create(result)
+			.assertNext(updatedRows -> assertEquals(0, updatedRows, "Expected no rows to be updated"))
+			.verifyComplete();
+
+		verify(interviewRepository, times(1)).updateExpiredInterviews();
 	}
 }

@@ -9,6 +9,7 @@ import com.tnite.jobwinner.repo.JobApplicationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -74,9 +75,6 @@ public class InterviewService {
 	}
 
 	public Flux<Interview> allInterview() {
-//		return interviewRepository.findAll()
-//			.doOnComplete(() -> log.info("Retrieved all interviews"))
-//			.doOnError(e -> log.error("Failed to retrieve interviews", e));
 		return interviewRepository.findAll()
 			.flatMap(interview ->
 				jobApplicationRepository.findById(interview.getJobApplicationId())
@@ -113,4 +111,15 @@ public class InterviewService {
 			.doOnError(e -> log.error("Failed to retrieve interview with id {}", id, e));
 	}
 
+	@Transactional
+	public Mono<Integer> updateOutdatedInterviewToExpired() {
+		return interviewRepository.updateExpiredInterviews()
+			.doOnNext(count -> {
+				if (count > 0) {
+					log.info("{} interview(s) marked as expired.", count);
+				} else {
+					log.info("No expired interviews found.");
+				}
+			});
+	}
 }
