@@ -102,6 +102,14 @@ mvn clean install
 java -jar target/job-winner-0.0.1-SNAPSHOT.jar
 ```
 
+Alternatively, you can run the java app with h2 database:
+```console
+# Initializing and Running the Application with H2 Database (first time only)
+java -jar target/job-winner-0.0.1-SNAPSHOT.jar --spring.profiles.active=h2 --spring.sql.init.mode=always
+
+# Starting the Application When Database Already Exists
+java -jar target/job-winner-0.0.1-SNAPSHOT.jar --spring.profiles.active=h2
+```
 Please follow the build instruction from the [UI repo](https://github.com/januschung/job-winner-ui) to bring up the UI.
 
 ## Contributing

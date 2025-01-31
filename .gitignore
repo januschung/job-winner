@@ -45,3 +45,6 @@ mvnw
 mvnw.cmd
 
 .idea
+
+data/
+pgdata/
