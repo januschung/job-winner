@@ -8,6 +8,8 @@ type Query {
     interviewById(id: ID): Interview
     allOffer: [Offer]
     offerByJobApplicationId(jobApplicationId: Int!): Offer
+    frequentUrlById(id: ID): FrequentUrl
+    allFrequentUrl: [FrequentUrl]
 }
 
 type JobApplication {
@@ -54,20 +56,29 @@ type Interview {
     jobApplication: JobApplication
 }
 
+type FrequentUrl {
+    id: ID!
+    title: String!
+    url: String!
+}
+
 type Mutation {
-    addJobApplication(addJobApplicationInput: AddJobApplicationInput): JobApplication
+    addJobApplication(jobApplicationInput: JobApplicationInput): JobApplication
     updateJobApplication(jobApplication: UpdateJobApplicationInput): JobApplication
     deleteJobApplication(id: ID): JobApplication
     updateProfile(profile: UpdateProfileInput): Profile
-    addInterview(interviewInput: AddInterviewInput): Interview
+    addInterview(interviewInput: InterviewInput): Interview
     updateInterview(id: ID!, interview: UpdateInterviewInput): Interview
     deleteInterview(id: ID): Interview
     addOffer(offerInput: OfferInput): Offer
     updateOffer(offer: UpdateOfferInput): Offer
     deleteOffer(id: ID): Offer
+    addFrequentUrl(frequentUrlInput: FrequentUrlInput): FrequentUrl
+    updateFrequentUrl(frequentUrl: UpdateFrequentUrlInput): FrequentUrl
+    deleteFrequentUrl(id: ID): FrequentUrl
 }
 
-input AddJobApplicationInput {
+input JobApplicationInput {
     companyName: String
     jobTitle: String
     salaryRange: String
@@ -102,7 +113,7 @@ input UpdateProfileInput {
     personalWebsite: String
 }
 
-input AddInterviewInput {
+input InterviewInput {
     jobApplicationId: Int!
     interviewDate: String!
     interviewer: String
@@ -132,4 +143,15 @@ input UpdateOfferInput {
     offerDate: String!
     salaryOffered: String
     description: String
+}
+
+input FrequentUrlInput {
+    title: String!
+    url: String!
+}
+
+input UpdateFrequentUrlInput {
+    id: ID!
+    title: String!
+    url: String!
 }
