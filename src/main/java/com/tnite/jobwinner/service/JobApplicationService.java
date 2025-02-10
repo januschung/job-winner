@@ -35,9 +35,9 @@ public class JobApplicationService {
     };
     
 
-    public Mono<JobApplication> addJobApplication(JobApplicationInput addJobApplicationInput) {
-        Mono<JobApplication> jobApplication = jobApplicationRepository.save(mapping.apply(addJobApplicationInput));
-        log.info("Added new job application: {}", addJobApplicationInput);
+    public Mono<JobApplication> addJobApplication(JobApplicationInput jobApplicationInput) {
+        Mono<JobApplication> jobApplication = jobApplicationRepository.save(mapping.apply(jobApplicationInput));
+        log.info("Added new job application: {}", jobApplicationInput);
         return jobApplication;
     }
 

@@ -63,22 +63,22 @@ type FrequentUrl {
 }
 
 type Mutation {
-    addJobApplication(addJobApplicationInput: AddJobApplicationInput): JobApplication
+    addJobApplication(jobApplicationInput: JobApplicationInput): JobApplication
     updateJobApplication(jobApplication: UpdateJobApplicationInput): JobApplication
     deleteJobApplication(id: ID): JobApplication
     updateProfile(profile: UpdateProfileInput): Profile
-    addInterview(interviewInput: AddInterviewInput): Interview
+    addInterview(interviewInput: InterviewInput): Interview
     updateInterview(id: ID!, interview: UpdateInterviewInput): Interview
     deleteInterview(id: ID): Interview
     addOffer(offerInput: OfferInput): Offer
     updateOffer(offer: UpdateOfferInput): Offer
     deleteOffer(id: ID): Offer
     addFrequentUrl(frequentUrlInput: FrequentUrlInput): FrequentUrl
-    updateFrequentUrl(frequentUrl: FrequentUrlInput): FrequentUrl
+    updateFrequentUrl(frequentUrl: UpdateFrequentUrlInput): FrequentUrl
     deleteFrequentUrl(id: ID): FrequentUrl
 }
 
-input AddJobApplicationInput {
+input JobApplicationInput {
     companyName: String
     jobTitle: String
     salaryRange: String
@@ -113,7 +113,7 @@ input UpdateProfileInput {
     personalWebsite: String
 }
 
-input AddInterviewInput {
+input InterviewInput {
     jobApplicationId: Int!
     interviewDate: String!
     interviewer: String

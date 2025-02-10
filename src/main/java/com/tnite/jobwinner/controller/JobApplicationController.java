@@ -39,8 +39,8 @@ public class JobApplicationController {
     
     
     @MutationMapping
-    public Mono<JobApplication> addJobApplication(@Argument JobApplicationInput addJobApplicationInput) {
-        return jobApplicationService.addJobApplication(addJobApplicationInput);
+    public Mono<JobApplication> addJobApplication(@Argument JobApplicationInput jobApplicationInput) {
+        return jobApplicationService.addJobApplication(jobApplicationInput);
     }
     
     @MutationMapping

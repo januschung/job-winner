@@ -130,7 +130,7 @@ public class JobApplicationGraphQlTest {
 
         String document = """
         mutation{
-            addJobApplication(addJobApplicationInput: {
+            addJobApplication(jobApplicationInput: {
                 companyName:"some copmany",
                 jobTitle:"some title"
                 salaryRange:"100-200",

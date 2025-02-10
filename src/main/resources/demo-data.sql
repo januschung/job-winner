@@ -66,3 +66,30 @@ VALUES
 (1, CURRENT_DATE + 30, '110k', 'Offer extended for Software Engineer at Acme Corp'),
 (2, CURRENT_DATE + 31, '105k', 'Offer extended for Data Scientist at BetaTech'),
 (6, CURRENT_DATE + 32, '115k', 'Offer extended for Software Engineer at Zeta Group');
+
+-- Sample frequent url data
+INSERT INTO frequent_url (
+    title,
+    url
+)
+VALUES
+('LinkedIn Jobs', 'https://www.linkedin.com/jobs/'),
+('Indeed', 'https://www.indeed.com/'),
+('Glassdoor', 'https://www.glassdoor.com/Job/'),
+('Monster', 'https://www.monster.com/jobs/'),
+('We Work Remotely', 'https://weworkremotely.com/'),
+('AngelList', 'https://angel.co/jobs'),
+('Remotive', 'https://remotive.io/remote-jobs'),
+('HackerRank Jobs', 'https://www.hackerrank.com/jobs'),
+('Hired', 'https://hired.com/'),
+('Stack Overflow Jobs', 'https://stackoverflow.com/jobs'),
+('FlexJobs', 'https://www.flexjobs.com/'),
+('Wellfound (AngelList Talent)', 'https://angel.co/talent'),
+('Turing', 'https://www.turing.com/jobs/'),
+('Dice', 'https://www.dice.com/'),
+('Ladders', 'https://www.theladders.com/'),
+('Outsourcely', 'https://www.outsourcely.com/'),
+('Europe Remotely', 'https://europeremotely.com/'),
+('Jobspresso', 'https://jobspresso.co/'),
+('Remote OK', 'https://remoteok.io/'),
+('Just Remote', 'https://justremote.co/');
