@@ -43,5 +43,11 @@ create table if not exists offer (
     constraint job_application_unique unique (job_application_id)
 );
 
+create table if not exists frequent_url {
+    id serial primary key,
+    title varchar(50),
+    url varchar(200),
+};
+
 insert into profile(id)
     values(1);
