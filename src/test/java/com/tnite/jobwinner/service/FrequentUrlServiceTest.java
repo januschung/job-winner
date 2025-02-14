@@ -71,10 +71,10 @@ public class FrequentUrlServiceTest {
 		Mono<FrequentUrl> result = frequentUrlService.addFrequentUrl(addFrequentUrlInput1);
 
 		StepVerifier.create(result)
-			.assertNext(savedfrequentUrl -> {
-				assertEquals(frequentUrl1.getId(), savedfrequentUrl.getId());
-				assertEquals(frequentUrl1.getTitle(), savedfrequentUrl.getTitle());
-				assertEquals(frequentUrl1.getUrl(), savedfrequentUrl.getUrl());
+			.assertNext(savedFrequentUrl -> {
+				assertEquals(frequentUrl1.getId(), savedFrequentUrl.getId());
+				assertEquals(frequentUrl1.getTitle(), savedFrequentUrl.getTitle());
+				assertEquals(frequentUrl1.getUrl(), savedFrequentUrl.getUrl());
 			})
 			.verifyComplete();
 
