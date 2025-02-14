@@ -84,7 +84,7 @@ VALUES
 ('Hired', 'https://hired.com/'),
 ('Stack Overflow Jobs', 'https://stackoverflow.com/jobs'),
 ('FlexJobs', 'https://www.flexjobs.com/'),
-('Wellfound (AngelList Talent)', 'https://angel.co/talent'),
+('Wellfound', 'https://angel.co/talent'),
 ('Turing', 'https://www.turing.com/jobs/'),
 ('Dice', 'https://www.dice.com/'),
 ('Ladders', 'https://www.theladders.com/'),
