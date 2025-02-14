@@ -34,6 +34,9 @@ public class DemoDataRefreshService {
         databaseClient.sql("SET REFERENTIAL_INTEGRITY FALSE;")
             .then()
             .subscribe();
+        databaseClient.sql("TRUNCATE TABLE question RESTART IDENTITY;")
+            .then()
+            .subscribe();
         databaseClient.sql("TRUNCATE TABLE frequent_url RESTART IDENTITY;")
             .then()
             .subscribe();

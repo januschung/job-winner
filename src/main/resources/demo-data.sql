@@ -93,3 +93,16 @@ VALUES
 ('Jobspresso', 'https://jobspresso.co/'),
 ('Remote OK', 'https://remoteok.io/'),
 ('Just Remote', 'https://justremote.co/');
+
+-- Sample question data
+INSERT INTO question (question, answer) VALUES
+('Can you tell me about yourself?',
+ 'I am a software developer with a strong background in full-stack development. I have experience working with React, Node.js, and databases like PostgreSQL. I enjoy solving complex problems and collaborating with teams to build scalable applications.'),
+('What are your strengths and weaknesses?',
+ 'One of my strengths is problem-solving. I enjoy breaking down complex challenges and finding efficient solutions. I am also a quick learner, always eager to adapt to new technologies. A weakness I am working on is delegating tasks more effectively, as I sometimes take on too much responsibility myself.'),
+('Describe a challenging project you worked on.',
+ 'I worked on a project that involved migrating a legacy application to a modern stack. The biggest challenge was ensuring minimal downtime while transferring a large database. I led the effort in designing a phased rollout and automated testing to ensure a smooth transition.'),
+('How do you handle tight deadlines and pressure?',
+ 'I prioritize tasks by breaking them into smaller steps and focusing on high-impact activities first. I also communicate proactively with my team to ensure everyone is aligned. When under pressure, I stay calm, rely on my problem-solving skills, and adapt to changing priorities.'),
+('Why do you want to work at our company?',
+ 'I admire your company’s innovation in the tech industry and its culture of continuous learning. I am particularly excited about the opportunity to work on cutting-edge projects with a talented team, where I can contribute my skills and grow professionally.');

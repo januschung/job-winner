@@ -10,6 +10,8 @@ type Query {
     offerByJobApplicationId(jobApplicationId: Int!): Offer
     frequentUrlById(id: ID): FrequentUrl
     allFrequentUrl: [FrequentUrl]
+    questionById(id: ID): Question
+    allQuestion: [Question]
 }
 
 type JobApplication {
@@ -62,6 +64,12 @@ type FrequentUrl {
     url: String!
 }
 
+type Question {
+    id: ID!
+    question: String!
+    answer: String!
+}
+
 type Mutation {
     addJobApplication(jobApplicationInput: JobApplicationInput): JobApplication
     updateJobApplication(jobApplication: UpdateJobApplicationInput): JobApplication
@@ -76,6 +84,9 @@ type Mutation {
     addFrequentUrl(frequentUrlInput: FrequentUrlInput): FrequentUrl
     updateFrequentUrl(frequentUrl: UpdateFrequentUrlInput): FrequentUrl
     deleteFrequentUrl(id: ID): FrequentUrl
+    addQuestion(questionInput: QuestionInput): Question
+    updateQuestion(question: UpdateQuestionInput): Question
+    deleteQuestion(id: ID): Question
 }
 
 input JobApplicationInput {
@@ -154,4 +165,14 @@ input UpdateFrequentUrlInput {
     id: ID!
     title: String!
     url: String!
+}
+
+input QuestionInput {
+    question: String!
+    answer: String!
+}
+input UpdateQuestionInput {
+    id: ID!
+    question: String!
+    answer: String!
 }

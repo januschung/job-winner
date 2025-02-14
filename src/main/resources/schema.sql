@@ -49,5 +49,11 @@ create table if not exists frequent_url(
     url varchar(200)
 );
 
+create table if not exists question(
+    id serial primary key,
+    question varchar(200),
+    answer varchar(500)
+);
+
 insert into profile(id)
     values(1);
