@@ -34,7 +34,7 @@ jobs:
 
       - name: Upload artifact via SCP
         run: |
-          scp -i ~/.ssh/deploy_key -r ./target/job-winner-0.0.1-SNAPSHOT.jar ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/opc/build
+          scp -i ~/.ssh/deploy_key -r ./target/job-winner-0.0.1-SNAPSHOT.jar ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/opc
 
       - name: Restart Application
         run: |
