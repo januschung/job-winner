@@ -41,7 +41,7 @@ class InterviewServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		jobApplication = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "abc");
+		jobApplication = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "", "abc");
 		interview1 = new Interview(1, 1, LocalDate.now(), "John Doe", "Technical Interview", "scheduled", jobApplication);
 		interview2 = new Interview(2, 1, LocalDate.now(), "Jane Doe", "HR Interview", "closed", jobApplication);
 		interviewInput = new InterviewInput(1, LocalDate.now(), "John Doe", "Technical Interview", "scheduled");

@@ -6,6 +6,7 @@ create table if not exists job_application(
     job_url varchar(200),
     applied_date date,
     description varchar(500),
+    note varchar(500),
     status varchar(20)
 );
 
