@@ -67,6 +67,7 @@ public class JobApplicationServiceTest {
 		input.setJobUrl("https://example.com");
 		input.setAppliedDate(LocalDate.now());
 		input.setDescription("whatever");
+		input.setNote("foo");
 		input.setStatus("Open");
 
 		JobApplication result = jobApplicationService.mapping.apply(input);
@@ -77,6 +78,7 @@ public class JobApplicationServiceTest {
 		assertEquals(input.getJobUrl(), result.getJobUrl());
 		assertEquals(input.getAppliedDate(), result.getAppliedDate());
 		assertEquals(input.getDescription(), result.getDescription());
+		assertEquals(input.getNote(), result.getNote());
 		assertEquals(input.getStatus(), result.getStatus());
 	}
 

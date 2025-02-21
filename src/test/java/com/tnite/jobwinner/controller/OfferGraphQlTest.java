@@ -54,9 +54,9 @@ public class OfferGraphQlTest {
 
     @BeforeEach
     void setUp() {
-        jobApplication1 = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "abc");
-        jobApplication2 = new JobApplication(2, "Company B", "QA", "", "", LocalDate.now(), "", "open");
-        jobApplication3 = new JobApplication(3, "Company C", "QA", "", "", LocalDate.now(), "", "open");
+        jobApplication1 = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "", "abc");
+        jobApplication2 = new JobApplication(2, "Company B", "QA", "", "", LocalDate.now(), "", "", "open");
+        jobApplication3 = new JobApplication(3, "Company C", "QA", "", "", LocalDate.now(), "", "", "open");
 
         offer1 = new Offer(1, 1, LocalDate.of(2024, 9, 2), "1", "whatever1", jobApplication1);
         offer2 = new Offer(2, 2, LocalDate.of(2024, 9, 2), "2", "whatever2", jobApplication2);
@@ -121,6 +121,7 @@ public class OfferGraphQlTest {
                     jobUrl
                     appliedDate
                     description
+                    note
                     status
                 }
             }

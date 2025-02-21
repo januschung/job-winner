@@ -41,8 +41,8 @@ class OfferServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		jobApplication1 = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "open");
-		jobApplication2 = new JobApplication(2, "Company A", "QA", "", "", LocalDate.now(), "", "open");
+		jobApplication1 = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "", "open");
+		jobApplication2 = new JobApplication(2, "Company A", "QA", "", "", LocalDate.now(), "", "", "open");
 		offer1 = new Offer(1, 1, LocalDate.now(), "1", "whatever1", jobApplication1);
 		offer2 = new Offer(2, 2, LocalDate.now(), "2", "whatever2", jobApplication2);
 		offerInput = new OfferInput(1, LocalDate.now(), "1", "whatever1");

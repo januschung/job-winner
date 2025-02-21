@@ -58,6 +58,7 @@ public class JobApplicationGraphQlTest {
         jobApplication1.setDescription("Description A");
         jobApplication1.setSalaryRange("1000-2000");
         jobApplication1.setJobUrl("http://companyA.com");
+        jobApplication1.setNote("whatever");
         jobApplication1.setStatus("Applied");
 
         jobApplication2 = new JobApplication();
@@ -68,6 +69,7 @@ public class JobApplicationGraphQlTest {
         jobApplication2.setDescription("Description B");
         jobApplication2.setSalaryRange("2000-3000");
         jobApplication2.setJobUrl("http://companyB.com");
+        jobApplication2.setNote("whatsoever");
         jobApplication2.setStatus("Interview");
 
         jobApplication3 = new JobApplication();
@@ -78,6 +80,7 @@ public class JobApplicationGraphQlTest {
         jobApplication3.setDescription("Description C");
         jobApplication3.setSalaryRange("1500-2500");
         jobApplication3.setJobUrl("http://companyC.com");
+        jobApplication3.setNote("NA");
         jobApplication3.setStatus("Offer");
 
         jobApplicationList = Arrays.asList(jobApplication1, jobApplication2, jobApplication3);
@@ -90,6 +93,7 @@ public class JobApplicationGraphQlTest {
         jobApplication4.setDescription("whatever");
         jobApplication4.setSalaryRange("100-200");
         jobApplication4.setJobUrl("some url");
+        jobApplication4.setNote("None");
         jobApplication4.setStatus("whatever");
 
         jobApplication1_updated = new JobApplication();
@@ -100,6 +104,7 @@ public class JobApplicationGraphQlTest {
         jobApplication1_updated.setDescription("whatever");
         jobApplication1_updated.setSalaryRange("100-200");
         jobApplication1_updated.setJobUrl("some url");
+        jobApplication1_updated.setNote("some note");
         jobApplication1_updated.setStatus("whatever");
     }
 
@@ -111,7 +116,7 @@ public class JobApplicationGraphQlTest {
         String document = """
         query {
             allJobApplication {
-                id, description, jobTitle, jobUrl, status, appliedDate
+                id, description, jobTitle, jobUrl, status, appliedDate, note
             }
         }
         """;
@@ -137,7 +142,8 @@ public class JobApplicationGraphQlTest {
                 appliedDate:"2023-01-01",
                 status:"whatever",
                 jobUrl: "some url",
-                description: "whatever"
+                description: "whatever",
+                note: "some note"
             }) {
                 id, jobTitle, description
             }
@@ -168,7 +174,8 @@ public class JobApplicationGraphQlTest {
                 appliedDate:"2023-01-01",
                 status:"whatever",
                 jobUrl: "some url",
-                description: "whatever"
+                description: "whatever",
+                note: "some note"
             }) {
                 id
                 companyName
@@ -178,6 +185,7 @@ public class JobApplicationGraphQlTest {
                 status
                 jobUrl
                 description
+                note
             }
         }
         """;

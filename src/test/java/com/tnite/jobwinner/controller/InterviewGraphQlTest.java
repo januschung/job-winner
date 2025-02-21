@@ -50,8 +50,8 @@ public class InterviewGraphQlTest {
 
     @BeforeEach
     void setUp() {
-        jobApplication1 = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "abc");
-        jobApplication2 = new JobApplication(2, "Company B", "QA", "", "", LocalDate.now(), "", "open");
+        jobApplication1 = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "", "abc");
+        jobApplication2 = new JobApplication(2, "Company B", "QA", "", "", LocalDate.now(), "", "", "open");
         interview1 = new Interview(1, 1, LocalDate.of(2024, 9, 2), "John Doe", "Technical interview", "scheduled", jobApplication1);
         interview2 = new Interview(2, 1, LocalDate.now(), "Jane Doe", "HR interview", "closed", jobApplication1);
         interview3 = new Interview(3, 2, LocalDate.now(), "Jane Doe", "HR interview", "scheduled", jobApplication2);
@@ -116,6 +116,7 @@ public class InterviewGraphQlTest {
                     jobUrl
                     appliedDate
                     description
+                    note
                     status
                 }
             }
@@ -154,6 +155,7 @@ public class InterviewGraphQlTest {
                     jobUrl
                     appliedDate
                     description
+                    note
                     status
                 }
             }
@@ -192,6 +194,7 @@ public class InterviewGraphQlTest {
                     jobUrl
                     appliedDate
                     description
+                    note
                     status
                 }
             }

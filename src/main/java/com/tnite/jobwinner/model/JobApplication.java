@@ -30,6 +30,7 @@ public class JobApplication {
     @Column("applied_date")
     private LocalDate appliedDate;
     private String description;
+    private String note;
     private String status;
     
 }

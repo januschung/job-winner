@@ -21,21 +21,22 @@ INSERT INTO job_application (
     job_url,
     applied_date,
     description,
+    note,
     status
 )
 VALUES
-('Acme Corp', 'Software Engineer', '100k-120k', 'https://www.acme.com/jobs/software-engineer', CURRENT_DATE + 10, 'Develop software solutions', 'open'),
-('BetaTech', 'Data Scientist', '90k-110k', 'https://www.betatech.com/jobs/data-scientist', CURRENT_DATE + 11, 'Analyze data and provide insights', 'open'),
-('Gamma Solutions', 'Product Manager', '120k-140k', 'https://www.gammasolutions.com/jobs/product-manager', CURRENT_DATE + 12, 'Lead product development', 'active'),
-('Delta Inc.', 'Web Developer', '80k-100k', 'https://www.deltainc.com/jobs/web-developer', CURRENT_DATE + 13, 'Build responsive websites', 'active'),
-('Epsilon LLC', 'HR Specialist', '60k-80k', 'https://www.epsilonllc.com/jobs/hr-specialist', CURRENT_DATE + 14, 'Manage employee relations', 'open'),
-('Zeta Group', 'Software Engineer', '95k-115k', 'https://www.zetagroup.com/jobs/software-engineer', CURRENT_DATE + 15, 'Write clean, maintainable code', 'active'),
-('Omega Technologies', 'DevOps Engineer', '105k-125k', 'https://www.omegatech.com/jobs/devops-engineer', CURRENT_DATE + 10, 'Automate infrastructure deployment', 'active'),
-('Lambda Solutions', 'Business Analyst', '85k-105k', 'https://www.lambdasolutions.com/jobs/business-analyst', CURRENT_DATE + 11, 'Gather and analyze business requirements', 'active'),
-('NuTech', 'Data Analyst', '70k-90k', 'https://www.nutech.com/jobs/data-analyst', CURRENT_DATE + 12, 'Create reports and dashboards', 'open'),
-('Sigma Enterprises', 'Sales Manager', '100k-120k', 'https://www.sigmaenterprises.com/jobs/sales-manager', CURRENT_DATE + 13, 'Manage sales teams and strategy', 'open'),
-('OmegaTech', 'Front-end Developer', '90k-110k', 'https://www.omegatech.com/jobs/front-end-developer', CURRENT_DATE + 14, 'Develop front-end features', 'open'),
-('XenoTech', 'Back-end Developer', '100k-120k', 'https://www.xenotech.com/jobs/back-end-developer', CURRENT_DATE + 15, 'Work on back-end server systems', 'rejected');
+('Acme Corp', 'Software Engineer', '100k-120k', 'https://www.acme.com/jobs/software-engineer', CURRENT_DATE + 10, 'Develop software solutions', 'Researched company, submitted application, awaiting response', 'open'),
+('BetaTech', 'Data Scientist', '90k-110k', 'https://www.betatech.com/jobs/data-scientist', CURRENT_DATE + 11, 'Analyze data and provide insights', 'Had a phone screen, waiting for next steps', 'open'),
+('Gamma Solutions', 'Product Manager', '120k-140k', 'https://www.gammasolutions.com/jobs/product-manager', CURRENT_DATE + 12, 'Lead product development', 'Completed first-round interview, preparing for case study', 'active'),
+('Delta Inc.', 'Web Developer', '80k-100k', 'https://www.deltainc.com/jobs/web-developer', CURRENT_DATE + 13, 'Build responsive websites', 'Received take-home assignment, in progress', 'active'),
+('Epsilon LLC', 'HR Specialist', '60k-80k', 'https://www.epsilonllc.com/jobs/hr-specialist', CURRENT_DATE + 14, 'Manage employee relations', 'Application submitted, no response yet', 'open'),
+('Zeta Group', 'Software Engineer', '95k-115k', 'https://www.zetagroup.com/jobs/software-engineer', CURRENT_DATE + 15, 'Write clean, maintainable code', 'Interview scheduled for next week', 'active'),
+('Omega Technologies', 'DevOps Engineer', '105k-125k', 'https://www.omegatech.com/jobs/devops-engineer', CURRENT_DATE + 10, 'Automate infrastructure deployment', 'Awaiting feedback from final interview', 'active'),
+('Lambda Solutions', 'Business Analyst', '85k-105k', 'https://www.lambdasolutions.com/jobs/business-analyst', CURRENT_DATE + 11, 'Gather and analyze business requirements', 'Networking with employees for referral', 'active'),
+('NuTech', 'Data Analyst', '70k-90k', 'https://www.nutech.com/jobs/data-analyst', CURRENT_DATE + 12, 'Create reports and dashboards', 'Submitted application, considering follow-up', 'open'),
+('Sigma Enterprises', 'Sales Manager', '100k-120k', 'https://www.sigmaenterprises.com/jobs/sales-manager', CURRENT_DATE + 13, 'Manage sales teams and strategy', 'Contacted recruiter, waiting for response', 'open'),
+('OmegaTech', 'Front-end Developer', '90k-110k', 'https://www.omegatech.com/jobs/front-end-developer', CURRENT_DATE + 14, 'Develop front-end features', 'Passed initial screening, interview pending', 'open'),
+('XenoTech', 'Back-end Developer', '100k-120k', 'https://www.xenotech.com/jobs/back-end-developer', CURRENT_DATE + 15, 'Work on back-end server systems', 'Rejected after final round, received feedback', 'rejected');
 
 -- Sample interviews data (linked to job applications)
 INSERT INTO interview (

@@ -16,5 +16,6 @@ public class JobApplicationInput {
     private LocalDate appliedDate;
     private String jobUrl;
     private String description;
+    private String note;
     private String status;
 }

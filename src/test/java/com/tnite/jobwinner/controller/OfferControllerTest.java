@@ -36,7 +36,7 @@ class OfferControllerTest {
 
 	@BeforeEach
 	void setUp() {
-		jobApplication = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "abc");
+		jobApplication = new JobApplication(1, "Company A", "QA", "", "", LocalDate.now(), "", "", "abc");
 
 		offer1 = new Offer(1, 1, LocalDate.of(2024, 9, 2), "1", "whatever1", jobApplication);
 		offer2 = new Offer(2, 1, LocalDate.of(2024, 9, 2), "2", "whatever2", jobApplication);

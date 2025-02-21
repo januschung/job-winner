@@ -30,6 +30,7 @@ public class JobApplicationService {
         jobApplication.setJobUrl(aji.getJobUrl());
         jobApplication.setAppliedDate(aji.getAppliedDate());
         jobApplication.setDescription(aji.getDescription());
+        jobApplication.setNote(aji.getNote());
         jobApplication.setStatus(aji.getStatus());
         return jobApplication;
     };
@@ -51,6 +52,7 @@ public class JobApplicationService {
                     j.setJobUrl(jobApplication.getJobUrl());
                     j.setAppliedDate(jobApplication.getAppliedDate());
                     j.setDescription(jobApplication.getDescription());
+                    j.setNote(jobApplication.getNote());
                     j.setStatus(jobApplication.getStatus());
                     return jobApplicationRepository.save(jobApplication).log();
                 });
