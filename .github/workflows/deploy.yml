@@ -40,7 +40,5 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
           pkill -f 'java -Dspring.profiles.active=demo'
-          sleep 2
-          nohup java -Dspring.profiles.active=demo -Dui.path=http://{{ secrets.REMOTE_HOST }} -jar app.jar > job-winner-output.log 2>&1 &
-          echo $! > job-winner.pid
+          ./start_job_runner.sh
           EOF
