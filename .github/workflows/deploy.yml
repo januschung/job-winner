@@ -34,11 +34,11 @@ jobs:
 
       - name: Upload artifact via SCP
         run: |
-          scp -i ~/.ssh/deploy_key ./target/*.jar ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/opc/app.jar
+          scp -i ~/.ssh/deploy_key ./target/*.jar ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/opc/jobwinner/app.jar
 
       - name: Restart Application
         run: |
           ssh -i ~/.ssh/deploy_key ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
-          pkill -f 'java -Dspring.profiles.active=demo'
-          ./start_job_runner.sh
+          cd /home/opc/jobwinner
+          docker compose restart
           EOF
