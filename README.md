@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-🚀 Check out the live demo! 👉 http://jobwinner.duckdns.org (or http://132.226.145.245)
+🚀 Check out the live demo! 👉 https://jobwinner.duckdns.org
 
 ✨ The data refreshes automatically every hour, so feel free to explore and test out any feature!
 
