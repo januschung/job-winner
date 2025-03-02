@@ -90,34 +90,45 @@ This is the backend for Job Winner and here is the stack:
 1. GraphQL
 1. Postgres DB
 
-## To build 
-
-Prereq: Java17
+## Create the Database
 
 1. Bring up the Postgres DB with docker-compose
 ```console
-docker-compose up -d
+docker-compose --profile db up -d
 ```
 1. Create the db schema with `src/main/resources/schema.sql`
     1. Visit http://localhost:8081/. Information can be found or modified [here](./src/main/resources/application.properties).
         1. User: `postgres`.
         1. Password: `example`.
         1. Click on `Import` and follow instructions to import file.
-1. Build the java app with Maven
+
+## (Optional) Build the App
+1. Build the java app with Maven. This runs by default when you bring up the app, so you don't _have_ to do it here.
 ```console
-mvn clean install
-java -jar target/job-winner-0.0.1-SNAPSHOT.jar
+docker-compose --profile build up
 ```
 
+## Run the App
+You should create the database ([above](#create-the-database)) first.
+
+This will build and run the app:
+```console
+docker-compose up -d
+```
+
+If you don't want to rebuild the app, you can run it this way:
+```console
+docker-compose --profile app up -d
+```
+
+Please follow the build instruction from the [UI repo](https://github.com/januschung/job-winner-ui) to bring up the UI.
+
+
+# Initializing and Running the Application with H2 Database
 Alternatively, you can run the java app with h2 database:
 ```console
-# Initializing and Running the Application with H2 Database (first time only)
-java -jar target/job-winner-0.0.1-SNAPSHOT.jar --spring.profiles.active=h2 --spring.sql.init.mode=always
-
-# Starting the Application When Database Already Exists
-java -jar target/job-winner-0.0.1-SNAPSHOT.jar --spring.profiles.active=h2
+SPRING_PROFILES_ACTIVE=h2 docker-compose --profile app up -d
 ```
-Please follow the build instruction from the [UI repo](https://github.com/januschung/job-winner-ui) to bring up the UI.
 
 ## Contributing
 

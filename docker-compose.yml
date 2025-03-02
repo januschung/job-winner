@@ -1,5 +1,37 @@
 services:
+  build:
+    profiles:
+      - "" # Run when no profile is selected
+      - build
+      - app
+    image: maven
+    working_dir: /app
+    entrypoint: ["mvn", "clean", "install"]
+    volumes:
+      - .:/app
+      - ./.mvn/.m2/cache:/root/.m2
+
+  app:
+    profiles:
+      - "" # Run when no profile is selected
+      - app
+    image: openjdk:17-jdk-alpine
+    working_dir: /app
+    entrypoint: ["java","-jar","/app/target/job-winner-0.0.1-SNAPSHOT.jar"]
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} ## TODO: This doesn't seem to be working
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app:ro
+    depends_on:
+      build:
+        condition: service_completed_successfully
+
   db:
+    profiles:
+      - "" # Run when no profile is selected
+      - db
     build:
       dockerfile: postgresDB.dockerfile
     restart: always
@@ -12,6 +44,9 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   adminer:
+    profiles:
+      - "" # Run when no profile is selected
+      - db
     image: adminer
     restart: always
     ports:
