@@ -1,21 +1,61 @@
 services:
+
+  # Build the .jar file using Maven
+  builder:
+    profiles:
+      - build
+    image: maven
+    working_dir: /app
+    entrypoint: ["mvn", "clean", "install"]
+    volumes:
+      - .:/app
+      - ./.mvn/.m2/cache:/root/.m2
+
+  # Run the application in PostgreSQL mode
+  app: &app-base
+    image: openjdk:17-jdk-alpine
+    environment:
+      SPRING_R2DBC_URL: r2dbc:postgresql://db:5432/postgres
+    working_dir: /app
+    entrypoint: ["java","-jar","/app/target/job-winner-0.0.1-SNAPSHOT.jar"]
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+  
+  # Run the application in H2 (local) mode
+  app-h2:
+    <<: *app-base
+    profiles:
+      - h2
+    environment:
+      SPRING_PROFILES_ACTIVE: h2
+      SPRING_SQL_INIT_MODE: ${SPRING_SQL_INIT_MODE:-}
+    depends_on: []
+
+  # PostgreSQL database
   db:
-    build:
-      dockerfile: postgresDB.dockerfile
+    image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: example
       POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: example
     ports:
       - 5432:5432
     volumes:
+      - "./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro"
       - pgdata:/var/lib/postgresql/data
 
+  # Database Admin Panel
   adminer:
     image: adminer
     restart: always
     ports:
       - 8081:8080
+    depends_on:
+      - db
 
 volumes:
   pgdata:
