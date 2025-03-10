@@ -15,13 +15,13 @@ services:
   app: &app-base
     image: openjdk:17-jdk-alpine
     environment:
-      SPRING_R2DBC_URL: r2dbc:postgresql://db:5432/postgres
+      SPRING_PROFILES_ACTIVE: docker
     working_dir: /app
     entrypoint: ["java","-jar","/app/target/job-winner-0.0.1-SNAPSHOT.jar"]
     ports:
       - 8080:8080
     volumes:
-      - .:/app
+      - ./target:/app/target:ro
     depends_on:
       - db
   
@@ -33,6 +33,9 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: h2
       SPRING_SQL_INIT_MODE: ${SPRING_SQL_INIT_MODE:-}
+    volumes:
+      - ./target:/app/target:ro
+      - ./data:/app/data
     depends_on: []
 
   # PostgreSQL database
@@ -45,7 +48,6 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - "./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro"
       - pgdata:/var/lib/postgresql/data
 
   # Database Admin Panel
