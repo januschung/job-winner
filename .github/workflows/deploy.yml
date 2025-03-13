@@ -40,5 +40,5 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
           cd /home/opc/jobwinner
-          docker compose restart
+          docker compose up --build --force-recreate -d backend
           EOF
