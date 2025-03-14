@@ -2,17 +2,20 @@ package com.tnite.jobwinner.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Service
-@Profile("demo")  // Only enable this service for the demo profile
+@Profile("demo")
+@DependsOn("flyway")  // Ensure Flyway migrations finish first
 @Slf4j
 public class DemoDataRefreshService {
 
@@ -22,12 +25,18 @@ public class DemoDataRefreshService {
     private ClassPathResource dataScript;
 
     public DemoDataRefreshService(DatabaseClient databaseClient) {
-        log.info("Initialize DemoDataRefreshService");
-        System.out.println(System.getProperty("java.class.path"));
+        log.info("Initializing DemoDataRefreshService...");
         this.databaseClient = databaseClient;
     }
 
-    // Scheduled task that runs every hour (on minute 0)
+    @Bean
+    public ApplicationRunner initializeDemoData() {
+        return args -> {
+            log.info("Running initial demo data refresh...");
+            refreshData();
+        };
+    }
+
     @Scheduled(cron = "0 0 * * * ?")
     public void refreshData() {
         log.info("Refreshing demo data...");
@@ -58,9 +67,9 @@ public class DemoDataRefreshService {
             databaseClient.sql(script)
                 .then()
                 .subscribe();
-            log.info("Refreshed demo data successfully!");
+            log.info("Demo data loaded successfully!");
         } catch (Exception e) {
-            log.error("Refreshing demo data with error: {}", e.getMessage());
+            log.error("Error loading demo data: {}", e.getMessage());
         }
     }
 }

@@ -90,13 +90,7 @@ This is the backend for Job Winner and here is the stack:
 1. GraphQL
 1. Postgres DB
 
-## Build the App
-1. Build the java app with Maven.
-```console
-docker-compose up builder
-```
-
-## Running the App
+## Build and Run the App with Docker Compose
 
 You have two options for data persistence:
 * **PostgreSQL**, a SQL database instance suitable for production releases
@@ -104,40 +98,40 @@ You have two options for data persistence:
 
 ### PostgreSQL
 
-1. Build the App with docker-compose
+1. Build the App with docker compose
 ```console
-docker-compose up builder
+docker compose up builder
 ```
 2. Run the App with docker compose. This will initialize the database automatically.
 ```console
-docker-compose up -d
+docker compose up -d
 ```
 
 3. Administer the database:
     * Visit http://localhost:8081/. Information can be found or modified [here](./src/main/resources/application.properties).
         * System: `PostgreSQL`
         * Server: `db`
-        * User: `postgres`.
-        * Password: `example`.
-        * Database: `postgres`.
+        * User: `postgres`
+        * Password: `example`
+        * Database: `postgres`
 
 Please follow the build instruction from the [UI repo](https://github.com/januschung/job-winner-ui) to bring up the UI.
 
 ### H2
 
-1. Build the App with docker-compose
+1. Build the App with docker compose
 ```console
-docker-compose up builder
+docker compose up builder
 ```
 
 2. Initialize the H2 database and run the app (**Do this the first time you run it**)
 ```console
-SPRING_SQL_INIT_MODE=always docker-compose up app-h2
+SPRING_SQL_INIT_MODE=always docker compose up app-h2
 ```
 
 3. Subsequent runs can skip the initialization:
-```
-docker-compose up app-h2
+``` console
+docker compose up app-h2
 ```
 
 Please follow the build instruction from the [UI repo](https://github.com/januschung/job-winner-ui) to bring up the UI.
