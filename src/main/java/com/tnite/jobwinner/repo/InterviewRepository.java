@@ -11,6 +11,6 @@ public interface InterviewRepository extends ReactiveCrudRepository<Interview, I
 	Flux<Interview> findAllByJobApplicationId(Integer jobApplicationId);
 
 	@Modifying
-	@Query("UPDATE interview SET status = 'Expired' WHERE interview_date < CURRENT_DATE AND status != 'Expired'")
+	@Query("UPDATE interview SET status = 'expired' WHERE interview_date < CURRENT_DATE AND status != 'expired'")
 	Mono<Integer> updateExpiredInterviews();
 }
