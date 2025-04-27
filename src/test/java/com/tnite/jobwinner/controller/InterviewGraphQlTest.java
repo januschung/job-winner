@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -35,10 +35,10 @@ public class InterviewGraphQlTest {
     @Autowired
     private GraphQlTester graphQlTester;
 
-    @MockBean
+    @MockitoBean
     InterviewRepository interviewRepository;
 
-    @MockBean
+    @MockitoBean
     JobApplicationRepository jobApplicationRepository;
 
     private Interview interview1;
@@ -86,9 +86,9 @@ public class InterviewGraphQlTest {
             .entityList(Interview.class)
             .hasSize(3)
             .satisfies(offers -> {
-                assertEquals(offers.get(0).getJobApplication().getCompanyName(), "Company A");
-                assertEquals(offers.get(1).getJobApplication().getCompanyName(), "Company A");
-                assertEquals(offers.get(2).getJobApplication().getCompanyName(), "Company B");
+                assertEquals("Company A", offers.get(0).getJobApplication().getCompanyName());
+                assertEquals("Company A", offers.get(1).getJobApplication().getCompanyName());
+                assertEquals("Company B", offers.get(2).getJobApplication().getCompanyName());
             });
 
         verify(interviewRepository, times(1)).findAll();
@@ -175,7 +175,7 @@ public class InterviewGraphQlTest {
     @Test
     void testAllInterviewByJobApplicationIdWhenOnlyOneMatches() {
         when(interviewRepository.findAllByJobApplicationId(2)).thenReturn(Flux.just(interview3));
-        when(jobApplicationRepository.findById(1)).thenReturn(Mono.just(jobApplication2));
+        when(jobApplicationRepository.findById(2)).thenReturn(Mono.just(jobApplication2));
 
         String document = """
         query {
