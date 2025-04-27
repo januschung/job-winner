@@ -85,7 +85,7 @@ Job Winner has two components
 This is the backend for Job Winner and here is the stack:
 
 1. Java 17
-1. Spring Boot 3.4.0
+1. Spring Boot 3.4.5
 1. Spring Reactive
 1. GraphQL
 1. Postgres DB
