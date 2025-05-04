@@ -1,16 +1,18 @@
 -- Sample data for the `profile` table
 UPDATE profile
 SET
-    first_name = 'John',
-    last_name = 'Doe',
-    address_street_1 = '123 Main St',
-    address_street_2 = 'Apt 4B',
-    address_city = 'San Francisco',
-    address_state = 'CA',
-    address_zip = '94105',
-    linkedin = 'https://linkedin.com/in/johndoe',
-    github = 'https://github.com/johndoe',
-    personal_website = 'https://johndoe.com'
+    first_name = 'Samus',
+    last_name = 'Aran',
+    address_street_1 = '7 Zebes Way',
+    address_street_2 = 'Unit Chozo',
+    address_city = 'Brinstar',
+    address_state = 'SR',
+    address_zip = '99999',
+    linkedin = 'https://linkedin.com/in/samusaran',
+    github = 'https://github.com/zero-suit-dev',
+    personal_website = 'https://samus.dev',
+    email = 'samus@galacticfed.io',
+    telephone = '800-ZERO-DRM'
 WHERE id = 1;
 
 -- Sample job applications data
@@ -25,18 +27,31 @@ INSERT INTO job_application (
     status
 )
 VALUES
-('Acme Corp', 'Software Engineer', '100k-120k', 'https://www.acme.com/jobs/software-engineer', CURRENT_DATE + 10, 'Develop software solutions', 'Researched company, submitted application, awaiting response', 'open'),
-('BetaTech', 'Data Scientist', '90k-110k', 'https://www.betatech.com/jobs/data-scientist', CURRENT_DATE + 11, 'Analyze data and provide insights', 'Had a phone screen, waiting for next steps', 'open'),
-('Gamma Solutions', 'Product Manager', '120k-140k', 'https://www.gammasolutions.com/jobs/product-manager', CURRENT_DATE + 12, 'Lead product development', 'Completed first-round interview, preparing for case study', 'active'),
-('Delta Inc.', 'Web Developer', '80k-100k', 'https://www.deltainc.com/jobs/web-developer', CURRENT_DATE + 13, 'Build responsive websites', 'Received take-home assignment, in progress', 'active'),
-('Epsilon LLC', 'HR Specialist', '60k-80k', 'https://www.epsilonllc.com/jobs/hr-specialist', CURRENT_DATE + 14, 'Manage employee relations', 'Application submitted, no response yet', 'open'),
-('Zeta Group', 'Software Engineer', '95k-115k', 'https://www.zetagroup.com/jobs/software-engineer', CURRENT_DATE + 15, 'Write clean, maintainable code', 'Interview scheduled for next week', 'active'),
-('Omega Technologies', 'DevOps Engineer', '105k-125k', 'https://www.omegatech.com/jobs/devops-engineer', CURRENT_DATE + 10, 'Automate infrastructure deployment', 'Awaiting feedback from final interview', 'active'),
-('Lambda Solutions', 'Business Analyst', '85k-105k', 'https://www.lambdasolutions.com/jobs/business-analyst', CURRENT_DATE + 11, 'Gather and analyze business requirements', 'Networking with employees for referral', 'active'),
-('NuTech', 'Data Analyst', '70k-90k', 'https://www.nutech.com/jobs/data-analyst', CURRENT_DATE + 12, 'Create reports and dashboards', 'Submitted application, considering follow-up', 'open'),
-('Sigma Enterprises', 'Sales Manager', '100k-120k', 'https://www.sigmaenterprises.com/jobs/sales-manager', CURRENT_DATE + 13, 'Manage sales teams and strategy', 'Contacted recruiter, waiting for response', 'open'),
-('OmegaTech', 'Front-end Developer', '90k-110k', 'https://www.omegatech.com/jobs/front-end-developer', CURRENT_DATE + 14, 'Develop front-end features', 'Passed initial screening, interview pending', 'open'),
-('XenoTech', 'Back-end Developer', '100k-120k', 'https://www.xenotech.com/jobs/back-end-developer', CURRENT_DATE + 15, 'Work on back-end server systems', 'Rejected after final round, received feedback', 'rejected');
+('Hyrule Systems', 'Software Engineer', '110k-130k', 'https://hyrulesys.com/jobs/se', CURRENT_DATE + 1, 'Develop combat mechanics engine', 'Great Glassdoor reviews', 'open'),
+('NekoTech', 'AI Engineer', '120k-150k', 'https://nekotech.ai/jobs/ai', CURRENT_DATE + 2, 'Build NPC behavior models', 'Still in early stages', 'open'),
+('KoopaCloud', 'Cloud Architect', '140k-160k', 'https://koopacloud.io/jobs/cloud-arch', CURRENT_DATE + 3, 'Architect scalable cloud systems', 'Love the Mario branding', 'open'),
+('Aperture Logic', 'Test Engineer', '90k-110k', 'https://aperturelogic.com/jobs/test', CURRENT_DATE + 4, 'Test automated turrets', 'Sent follow-up email', 'open'),
+('Midgar Works', 'DevOps Engineer', '105k-125k', 'https://midgarworks.com/jobs/devops', CURRENT_DATE + 5, 'Maintain CI/CD pipelines', 'Waiting on recruiter reply', 'open'),
+('Zanarkand Dynamics', 'Game Designer', '85k-105k', 'https://zanarkanddyn.com/jobs/designer', CURRENT_DATE + 6, 'Design game levels', 'Excited about their new RPG', 'open'),
+('EchoSlay', 'UX Designer', '95k-115k', 'https://echoslay.com/jobs/ux', CURRENT_DATE + 7, 'Improve UI flow for AR battles', 'Portfolio shared', 'open'),
+('RaptureNet', 'Network Engineer', '100k-120k', 'https://rapturenet.com/jobs/neteng', CURRENT_DATE + 8, 'Design underwater comms', 'Waiting on update', 'open'),
+('MoogleSoft', 'Data Engineer', '100k-125k', 'https://mooglesoft.com/jobs/data-eng', CURRENT_DATE + 9, 'ETL pipelines for player stats', 'Pinged recruiter on LinkedIn', 'open'),
+('WumpaWorks', 'Front-end Developer', '90k-110k', 'https://wumpaworks.io/jobs/frontend', CURRENT_DATE + 10, 'Build React-based dashboard', 'Small but growing studio', 'open'),
+('VaultTec Labs', 'Backend Developer', '110k-130k', 'https://vaulttecjobs.com/backend', CURRENT_DATE + 11, 'Secure RESTful APIs', 'Pending code challenge', 'open'),
+('BoomerangX', 'Mobile Developer', '100k-115k', 'https://boomerangx.com/jobs/mobile', CURRENT_DATE + 12, 'Work on mobile PvP features', 'Great game mechanics', 'open'),
+('CyberVania', 'Product Manager', '130k-150k', 'https://cybervania.com/jobs/pm', CURRENT_DATE + 13, 'Manage roadmap', 'Met PM at meetup', 'active'),
+('Respawn Digital', 'SRE', '125k-145k', 'https://respawn.digital/jobs/sre', CURRENT_DATE + 14, 'Uptime focus', 'Interviewed last week', 'active'),
+('MotherboardX', 'Security Engineer', '120k-140k', 'https://mbx.com/jobs/seceng', CURRENT_DATE + 15, 'Pen testing', 'Final round soon', 'active'),
+('YoshiStack', 'Fullstack Dev', '110k-130k', 'https://yoshistack.io/jobs/fullstack', CURRENT_DATE + 16, 'End-to-end features', 'Tech test done', 'active'),
+('DriftCircuit', 'Game Server Engineer', '115k-135k', 'https://driftcircuit.com/jobs/server', CURRENT_DATE + 17, 'Multiplayer infra', 'Awaiting next round', 'active'),
+('RedRing Labs', 'QA Analyst', '80k-100k', 'https://redringlabs.com/jobs/qa', CURRENT_DATE + 18, 'Test regression cases', 'Rejected with feedback', 'rejected'),
+('ManaCore', 'DevRel', '95k-110k', 'https://manacore.gg/jobs/devrel', CURRENT_DATE + 19, 'Engage community devs', 'Ghosted after recruiter chat', 'ghosted'),
+('DarkZone AI', 'ML Ops', '120k-145k', 'https://darkzone.ai/jobs/mlops', CURRENT_DATE + 20, 'Maintain models in prod', 'No updates post final round', 'ghosted'),
+('PixelForge', 'Art Pipeline Engineer', '100k-120k', 'https://pixelforge.gg/jobs/art-pipeline', CURRENT_DATE + 21, 'Automate asset pipelines', 'Ghosted after take-home', 'ghosted'),
+('SynthCity', 'Infrastructure Engineer', '130k-150k', 'https://synthcity.tech/jobs/infra', CURRENT_DATE + 22, 'Modernize infra', 'Rejection after panel', 'rejected'),
+('ChocoboCloud', 'Support Engineer', '80k-95k', 'https://chocobo.cloud/jobs/support', CURRENT_DATE + 23, 'Tech support workflows', 'Quick rejection', 'rejected'),
+('StarByte Studios', 'Gameplay Engineer', '110k-130k', 'https://starbyte.dev/jobs/gameplay', CURRENT_DATE + 24, 'Gameplay mechanics', 'No reply after HR call', 'ghosted'),
+('ShadowCode', 'Tooling Engineer', '105k-125k', 'https://shadowcode.gg/jobs/tooling', CURRENT_DATE + 25, 'Dev tools for creators', 'Ghosted after tech screen', 'ghosted');
 
 -- Sample interviews data (linked to job applications)
 INSERT INTO interview (
@@ -47,14 +62,19 @@ INSERT INTO interview (
     status
 )
 VALUES
-(1, CURRENT_DATE + 20, 'Alice Johnson', 'Technical interview with the development team', 'open'),
-(2, CURRENT_DATE + 21, 'Bob Brown', 'Data analysis task and discussion', 'open'),
-(3, CURRENT_DATE + 22, 'Charlie Taylor', 'Product management interview', 'open'),
-(4, CURRENT_DATE + 23, 'David Green', 'Web development skills test', 'open'),
-(5, CURRENT_DATE + 24, 'Eva White', 'HR interview', 'open'),
-(6, CURRENT_DATE + 25, 'Frank Black', 'Coding interview', 'open'),
-(7, CURRENT_DATE + 20, 'Grace Blue', 'DevOps and infrastructure test', 'open'),
-(8, CURRENT_DATE + 21, 'Hannah Red', 'Business analysis and scenario discussion', 'open');
+(1, CURRENT_DATE + 5, 'Zelda N.', 'Gameplay logic deep-dive', 'open'),
+(2, CURRENT_DATE + 6, 'Cat Y.', 'ML architecture discussion', 'open'),
+(3, CURRENT_DATE + 7, 'Bowser K.', 'Cloud deployment design', 'open'),
+(4, CURRENT_DATE + 8, 'GLaDOS B.', 'Automated testing walk-through', 'open'),
+(5, CURRENT_DATE + 9, 'Barret W.', 'CI/CD system review', 'open'),
+(6, CURRENT_DATE + 10, 'Tidus A.', 'Level design critique', 'open'),
+(7, CURRENT_DATE + 11, 'Echo V.', 'UX case study', 'open'),
+(8, CURRENT_DATE + 12, 'Andrew R.', 'Networking concepts', 'open'),
+(13, CURRENT_DATE + 13, 'Jill V.', 'Product case presentation', 'open'),
+(14, CURRENT_DATE + 14, 'Octane S.', 'On-call rotation Q&A', 'open'),
+(15, CURRENT_DATE + 15, 'Luigi M.', 'Security policy overview', 'open'),
+(16, CURRENT_DATE + 16, 'Toad C.', 'Fullstack architecture deep dive', 'open');
+
 
 -- Sample offers data (linked to job applications)
 INSERT INTO offer (
@@ -64,9 +84,11 @@ INSERT INTO offer (
     description
 )
 VALUES
-(1, CURRENT_DATE + 30, '110k', 'Offer extended for Software Engineer at Acme Corp'),
-(2, CURRENT_DATE + 31, '105k', 'Offer extended for Data Scientist at BetaTech'),
-(6, CURRENT_DATE + 32, '115k', 'Offer extended for Software Engineer at Zeta Group');
+(1, CURRENT_DATE + 20, '120k', 'Offer from Hyrule Systems for Software Engineer'),
+(2, CURRENT_DATE + 21, '135k', 'Offer from NekoTech for AI Engineer'),
+(6, CURRENT_DATE + 22, '105k', 'Offer from Zanarkand Dynamics for Game Designer'),
+(14, CURRENT_DATE + 23, '140k', 'Offer from Respawn Digital for SRE'),
+(15, CURRENT_DATE + 24, '138k', 'Offer from MotherboardX for Security Engineer');
 
 -- Sample frequent url data
 INSERT INTO frequent_url (

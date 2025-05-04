@@ -35,6 +35,8 @@ public class ProfileService {
         existingProfile.setLinkedin(updatedProfile.getLinkedin());
         existingProfile.setGithub(updatedProfile.getGithub());
         existingProfile.setPersonalWebsite(updatedProfile.getPersonalWebsite());
+        existingProfile.setEmail(updatedProfile.getEmail());
+        existingProfile.setTelephone(updatedProfile.getTelephone());
     }
 
     public Mono<Profile> getProfile(Integer id) {

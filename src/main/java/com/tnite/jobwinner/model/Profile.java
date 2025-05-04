@@ -35,5 +35,7 @@ public class Profile {
     private String github;
     @Column("personal_website")
     private String personalWebsite;
+    private String email;
+    private String telephone;
     
 }
