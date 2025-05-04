@@ -38,6 +38,8 @@ type Profile {
     linkedin: String
     github: String
     personalWebsite: String
+    email: String
+    telephone: String
 }
 
 type Offer {
@@ -125,6 +127,8 @@ input UpdateProfileInput {
     linkedin: String
     github: String
     personalWebsite: String
+    email: String
+    telephone: String
 }
 
 input InterviewInput {

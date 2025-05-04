@@ -39,8 +39,8 @@ public class ProfileGraphQlTest {
 
     @BeforeEach
     void setUp() {
-        profile = new Profile(1, null, null, null, null, null, null, null, null, null, null);
-        profile_updated = new Profile(1, "John", "Doe", "123 Main St", "Apt 4", "City", "State", "12345", "john.doe", "johndoe", "www.johndoe.com");
+        profile = new Profile(1, null, null, null, null, null, null, null, null, null, null, null, null);
+        profile_updated = new Profile(1, "John", "Doe", "123 Main St", "Apt 4", "City", "State", "12345", "john.doe", "johndoe", "www.johndoe.com", "john.doe@jd.com", "123-456-7890");
 
     }
 
@@ -64,6 +64,8 @@ public class ProfileGraphQlTest {
                 linkedin: "john.doe"
                 github: "johndoe"
                 personalWebsite: "www.johndoe.com"
+                email: "john.doe@jd.com"
+                telephone: "123-456-7890"
             }) {
                 id
                 firstName
@@ -76,6 +78,8 @@ public class ProfileGraphQlTest {
                 linkedin
                 github
                 personalWebsite
+                email
+                telephone
             }
         }
         """;
@@ -97,7 +101,7 @@ public class ProfileGraphQlTest {
         String document = """
         query {
             profileById(id: 1) {
-                id, firstName, lastName, addressStreet1, addressStreet2, addressCity, addressState, addressZip, linkedin, github, personalWebsite
+                id, firstName, lastName, addressStreet1, addressStreet2, addressCity, addressState, addressZip, linkedin, github, personalWebsite, email, telephone
             }
         }
         """;
