@@ -2,7 +2,7 @@
 FROM maven:3.9.4-eclipse-temurin-17 AS build
 WORKDIR /workspace
 COPY pom.xml ./
-COPY .mvn .mvn
+
 # use BuildKit cache for Maven repo
 RUN --mount=type=cache,target=/root/.m2 mvn -B -DskipTests dependency:go-offline
 COPY src ./src
