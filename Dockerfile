@@ -10,7 +10,6 @@ RUN --mount=type=cache,target=/root/.m2 mvn -B -DskipTests package
 
 # Stage 2: runtime image
 FROM amazoncorretto:17-alpine3.21
-WORKDIR /app
 COPY --from=build /workspace/target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app.jar"]
